@@ -74,31 +74,6 @@ The book *Nutrient Requirements of Dogs and Cats* (National Research Council, 20
 - Manual food creation with complete nutritional information
 - Categories: animal, supplement, cooked starch, other plants, recipe
 
-## Technology Stack
-
-- **Backend**: Spring Boot 4.1 + Gradle
-- **Template Engine**: Thymeleaf (TBD)
-- **Language**: Java 25
-- **Database**: TBD
-- **Nutritional database**: USDA FoodData Central (foundation foods)
-
-## Project Structure
-
-```
-diet-formulator/
-├── docs/
-│   ├── notas-formulador-clase-overview.md    # Functional analysis notes
-│   ├── formulador-original-descripcion.txt   # Original formulator description
-│   ├── dieta-ejemplo.pdf                     # Example diet (original PDF)
-│   └── dieta-ejemplo.md                      # Example diet (markdown table)
-├── src/
-│   ├── main/
-│   └── test/
-├── build.gradle
-├── settings.gradle
-└── README.md
-```
-
 ## Sources and References
 
 ### Scientific

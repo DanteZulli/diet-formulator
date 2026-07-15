@@ -1,4 +1,4 @@
-# Dieta Ejemplo - Referencia
+# Dieta Ejemplo - Otto Mayo-Villarosa
 
 ## Perfil del paciente
 
@@ -9,7 +9,7 @@
 | Peso | 21 kg |
 | Raza | Mestizo Pastor Alemán |
 | Condición Corporal | 1 (sobre elíptico del 1 al 5) |
-| Nivel de actividad | Sedentario |
+| Nivel de actividad | Sedentary |
 | Peso ideal | Sí (en su peso ideal) |
 | Proteínas | 40% |
 | Grasas | 20% |
@@ -17,7 +17,49 @@
 | Fibra %MS | 5% |
 | **Ingesta calórica recomendada** | **785 kcal** |
 
-## Tabla de nutrientes
+## Ingredientes
+
+| Nombre | Cantidad |
+|--------|----------|
+| Kelp + Tirosina (Natier) | 0.5 cápsula |
+| Cuello de pollo (con hueso carnoso) | 40 g |
+| Complejo Vitalum B (harina de arroz) | 0.1 cápsula |
+| Semilla Natural de Psyllium Husk y Lino Molido 2 | 1 g |
+| Mejillón azul, cocinado con calor húmedo | 5 g |
+| Huevo de gallina | 10 g |
+| Calabaza hervida y escurrida | 10 g |
+| Sardina (actualizada v4) * | 10 g |
+| Carne molida 10% | 35 g |
+| Hígado de res | 3 g |
+| Hígado de pollo | 5 g |
+| Corazón de res | 30 g |
+| Mollejas de pollo (Molleja De Pollo) | 20 g |
+
+## Energía
+
+| | |
+|---|---|
+| **Total** | **237 kcal** |
+
+## Calorías
+
+| Macro | % |
+|-------|---|
+| Proteína | 48.7% |
+| Grasa | 47.3% |
+| Carbohidratos | 4.1% |
+
+## Materia Seca
+
+| Componente | % |
+|------------|---|
+| Proteína | 59.5% |
+| Grasa | 25.7% |
+| Carbohidratos | 5.0% |
+| Fibra | 2.7% |
+| Ceniza | 7.2% |
+
+## Tabla de nutrientes completa
 
 Valores calculados para la dieta formada con los alimentos del ejemplo.
 
@@ -100,3 +142,4 @@ Valores calculados para la dieta formada con los alimentos del ejemplo.
 - Los límites seguros inferiores/uperiores para cada nutriente están definidos por el NRC (2006).
 - Valores como tiamina al 443% son correctos (verde) porque exceden el mínimo seguro sin llegar al límite superior.
 - La dieta fue armada manualmente agregando/eliminando alimentos hasta alcanzar los objetivos.
+- Datos extraídos del PDF de dieta ejemplo proporcionado por la Dra. Trinidad Achterberg Barros.
