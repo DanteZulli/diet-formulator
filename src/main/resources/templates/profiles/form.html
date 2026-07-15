@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${profile.id != null} ? 'Editar Perfil - Diet Formulator' : 'Nuevo Perfil - Diet Formulator'">Perfil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar-brand { font-weight: 600; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/profiles}">Diet Formulator</a>
+            <div class="navbar-nav">
+                <a class="nav-link" th:href="@{/profiles}">Perfiles</a>
+                <a class="nav-link" th:href="@{/foods}">Alimentos</a>
+                <a class="nav-link" th:href="@{/diets}">Dietas</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <h2 th:text="${profile.id != null} ? 'Editar Perfil' : 'Nuevo Perfil'">Perfil</h2>
+
+        <form th:action="@{/profiles}" th:object="${profile}" method="post" class="needs-validation" novalidate>
+
+            <!-- Hidden ID for updates / ID oculto para actualizaciones -->
+            <input type="hidden" th:field="*{id}">
+
+            <!-- Basic data / Datos básicos -->
+            <div class="card mb-4">
+                <div class="card-header"><h5>Datos del Animal</h5></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="especie" class="form-label">Especie</label>
+                            <select class="form-select" id="especie" th:field="*{especie}" required>
+                                <option value="">Seleccionar...</option>
+                                <option th:each="e : ${especies}" th:value="${e}" th:text="${e}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="lifeStage" class="form-label">Etapa de Vida</label>
+                            <select class="form-select" id="lifeStage" th:field="*{lifeStage}" required>
+                                <option value="">Seleccionar...</option>
+                                <option th:each="ls : ${lifeStages}" th:value="${ls}" th:text="${ls}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="raza" class="form-label">Raza</label>
+                            <input type="text" class="form-control" id="raza" th:field="*{raza}">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="pesoKg" class="form-label">Peso (kg)</label>
+                            <input type="number" step="0.1" class="form-control" id="pesoKg" th:field="*{pesoKg}" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="edadMeses" class="form-label">Edad (meses)</label>
+                            <input type="number" class="form-control" id="edadMeses" th:field="*{edadMeses}" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="condicionCorporal" class="form-label">Condición Corporal (1-5)</label>
+                            <input type="number" min="1" max="5" class="form-control" id="condicionCorporal" th:field="*{condicionCorporal}" required>
+                        </div>
+                        <div class="col-md-4 mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="peloNegro" th:field="*{peloNegro}">
+                            <label class="form-check-label" for="peloNegro">Tiene el pelo negro</label>
+                        </div>
+                        <div class="col-md-4 mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="sobrepeso" th:field="*{sobrepeso}">
+                            <label class="form-check-label" for="sobrepeso">Tiene sobrepeso (gatos)</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Puppy-specific / Específico para cachorros -->
+            <div class="card mb-4" id="puppySection" style="display: none;">
+                <div class="card-header"><h5>Datos de Cachorro</h5></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="pesoAdultoCachorro" class="form-label">Peso de Adulto (kg)</label>
+                            <input type="number" step="0.1" class="form-control" id="pesoAdultoCachorro" th:field="*{pesoAdultoCachorro}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lactation-specific / Específico para lactancia -->
+            <div class="card mb-4" id="lactationSection" style="display: none;">
+                <div class="card-header"><h5>Datos de Lactancia</h5></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="numCachorrosLactancia" class="form-label">Número de Cachorros</label>
+                            <input type="number" min="1" class="form-control" id="numCachorrosLactancia" th:field="*{numCachorrosLactancia}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="semanasLactancia" class="form-label">Semanas de Lactancia (1-4)</label>
+                            <input type="number" min="1" max="4" class="form-control" id="semanasLactancia" th:field="*{semanasLactancia}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Energy requirements / Requisitos energéticos -->
+            <div class="card mb-4">
+                <div class="card-header"><h5>Requisitos Energéticos</h5></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nivelActividad" class="form-label">Nivel de Actividad</label>
+                            <select class="form-select" id="nivelActividad" th:field="*{nivelActividad}" required>
+                                <option value="">Seleccionar...</option>
+                                <option th:each="na : ${nivelesActividad}" th:value="${na}" th:text="${na}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-3 mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="enPesoIdeal" th:field="*{enPesoIdeal}">
+                            <label class="form-check-label" for="enPesoIdeal">Está en su peso ideal</label>
+                        </div>
+                        <div class="col-md-3 mb-3" id="pesoIdealSection" style="display: none;">
+                            <label for="pesoIdealKg" class="form-label">Peso Ideal (kg)</label>
+                            <input type="number" step="0.1" class="form-control" id="pesoIdealKg" th:field="*{pesoIdealKg}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Ingesta Calórica Recomendada (kcal/día)</label>
+                            <input type="text" class="form-control" th:value="${profile.ingestaCaloricaRecomendada}" readonly>
+                        </div>
+                        <div class="col-md-3 mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="usarIngestaRecomendada" th:field="*{usarIngestaRecomendada}">
+                            <label class="form-check-label" for="usarIngestaRecomendada">Usar ingesta recomendada</label>
+                        </div>
+                        <div class="col-md-3 mb-3" id="customIntakeSection" style="display: none;">
+                            <label for="ingestaCaloricaCustom" class="form-label">Ingesta Calórica Custom (kcal/día)</label>
+                            <input type="number" step="0.1" class="form-control" id="ingestaCaloricaCustom" th:field="*{ingestaCaloricaCustom}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Macronutrient targets / Objetivos de macronutrientes -->
+            <div class="card mb-4">
+                <div class="card-header"><h5>Objetivos de Macronutrientes</h5></div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="proteinPct" class="form-label">Proteína (%)</label>
+                            <input type="range" min="0" max="100" class="form-range" id="proteinPct"
+                                   th:field="*{macronutrientTargets.proteinPct}" oninput="document.getElementById('proteinVal').textContent = this.value + '%'">
+                            <span id="proteinVal" th:text="${profile.macronutrientTargets?.proteinPct != null ? profile.macronutrientTargets.proteinPct + '%' : '0%'}"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="fatPct" class="form-label">Grasa (%)</label>
+                            <input type="range" min="0" max="100" class="form-range" id="fatPct"
+                                   th:field="*{macronutrientTargets.fatPct}" oninput="document.getElementById('fatVal').textContent = this.value + '%'">
+                            <span id="fatVal" th:text="${profile.macronutrientTargets?.fatPct != null ? profile.macronutrientTargets.fatPct + '%' : '0%'}"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="carbohydratePct" class="form-label">Carbohidratos (%)</label>
+                            <input type="range" min="0" max="100" class="form-range" id="carbohydratePct"
+                                   th:field="*{macronutrientTargets.carbohydratePct}" oninput="document.getElementById('carbVal').textContent = this.value + '%'">
+                            <span id="carbVal" th:text="${profile.macronutrientTargets?.carbohydratePct != null ? profile.macronutrientTargets.carbohydratePct + '%' : '0%'}"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="fiberMsPct" class="form-label">Fibra %MS (%)</label>
+                            <input type="range" min="0" max="100" class="form-range" id="fiberMsPct"
+                                   th:field="*{macronutrientTargets.fiberMsPct}" oninput="document.getElementById('fiberVal').textContent = this.value + '%'">
+                            <span id="fiberVal" th:text="${profile.macronutrientTargets?.fiberMsPct != null ? profile.macronutrientTargets.fiberMsPct + '%' : '0%'}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notes / Notas -->
+            <div class="card mb-4">
+                <div class="card-header"><h5>Motivo de la Consulta</h5></div>
+                <div class="card-body">
+                    <textarea class="form-control" rows="3" th:field="*{notas}"
+                              placeholder="Notas libres sobre la consulta..."></textarea>
+                </div>
+            </div>
+
+            <!-- Submit / Enviar -->
+            <div class="mb-4">
+                <button type="submit" class="btn btn-primary">Guardar Perfil</button>
+                <a th:href="@{/profiles}" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var lifeStageSelect = document.getElementById('lifeStage');
+            var enPesoIdealCheck = document.getElementById('enPesoIdeal');
+            var usarIngestaCheck = document.getElementById('usarIngestaRecomendada');
+
+            function toggleSections() {
+                var stage = lifeStageSelect.value;
+                document.getElementById('puppySection').style.display = stage === 'CACHORRO' ? 'block' : 'none';
+                document.getElementById('lactationSection').style.display = stage === 'LACTANCIA' ? 'block' : 'none';
+                document.getElementById('pesoIdealSection').style.display = enPesoIdealCheck.checked ? 'none' : 'block';
+                document.getElementById('customIntakeSection').style.display = usarIngestaCheck.checked ? 'none' : 'block';
+            }
+
+            lifeStageSelect.addEventListener('change', toggleSections);
+            enPesoIdealCheck.addEventListener('change', toggleSections);
+            usarIngestaCheck.addEventListener('change', toggleSections);
+
+            toggleSections();
+        });
+    </script>
+</body>
+</html>
