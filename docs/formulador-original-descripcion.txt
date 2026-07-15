@@ -1,77 +1,82 @@
-Textos presentes en https://medvetpreventiva.com/page/formulador-de-dietas (el formulador del cuál nos inspiramos)
+Texts from https://medvetpreventiva.com/page/formulador-de-dietas (the formulator we drew inspiration from)
 
-Empezá a ejercer la nutrición de manera profesional, práctica y con la certeza de estar haciendo los planes nutricionales de tus pacientes correctamente.
+Start practicing nutrition in a professional, practical way with the certainty that you are creating your patients' nutritional plans correctly.
 
-    Calculá requerimientos del paciente y guardá toda la información de tus consultas nutricionales en el mismo lugar.
-    Visualizá deficiencias y excesos de las dietas, ajustandolas rápidamente
-    Adaptá dietas a cada paciente verificando el aporte de cada nutriente en materia seca.
-    Incorporá alimentos, suplementos con los que trabajas.
-    Ingresá menús comerciales y verifica el aporte de cada nutriente, cubrí deficiencias de los mismos y equilibrá cantidades en casos de excesos.
-    Ganá seguridad y confianza al formular
+    Calculate patient requirements and store all your nutritional consultation information in one place.
+    Visualize diet deficiencies and excesses, adjusting them quickly
+    Adapt diets to each patient by verifying nutrient contribution on a dry matter basis.
+    Incorporate foods and supplements you work with.
+    Enter commercial menus and verify each nutrient's contribution, cover deficiencies and balance quantities in cases of excess.
+    Gain confidence and security when formulating
 
-Sobre el Formulador MVP
+About the Formulador MVP
 
-El Formulador MVP es una aplicación online diseñada para que veterinarios puedan elaborar dietas caseras equilibradas de manera práctica, organizada y precisa.
+The Formulador MVP is an online application designed for veterinarians to create balanced homemade diets in a practical, organized, and precise way.
 
-Cuenta con una interfaz simple e intuitiva que te permite formular planes nutricionales individualizados teniendo en cuenta los requerimientos nutricionales calculados según el peso metabólico del paciente, basados en los estándares del NRC. Algunos valores y relaciones nutricionales han sido ajustados según el criterio clínico de la médica veterinaria Trinidad Achterberg Barros.
-¿Qué podés hacer con el formulador?
-📋 Centralizar toda la información de tus pacientes
+It features a simple and intuitive interface that allows you to formulate individualized nutritional plans based on the patient's metabolic weight requirements, following NRC standards. Some nutritional values and relationships have been adjusted according to the clinical criteria of veterinarian Trinidad Achterberg Barros.
 
-Guardá en un mismo lugar:
+What can you do with the formulator?
 
-    datos clínicos,
-    planes nutricionales,
-    controles,
-    evolución de peso,
-    y fotografías de condición corporal.
+Centralize all your patient information
 
-🥩 Elaborar planes nutricionales equilibrados
+Store in one place:
 
-Formulá dietas naturales adaptadas a las necesidades individuales de cada paciente, contemplando:
+    clinical data,
+    nutritional plans,
+    checkups,
+    weight progression,
+    and body condition photos.
 
-    requerimientos nutricionales,
-    patologías,
-    preferencias alimentarias,
-    y objetivos específicos del manejo nutricional.
+Create balanced nutritional plans
 
-🍖 Trabajar con una amplia base de alimentos y suplementos
+Formulate natural diets adapted to each patient's individual needs, considering:
 
-Accedé a una base de datos personalizable con +450 alimentos y suplementos de uso frecuente, organizados por categorías.
+    nutritional requirements,
+    pathologies,
+    dietary preferences,
+    and specific nutritional management goals.
 
-Incluye:
+Work with a wide food and supplement database
 
-    suplementos utilizados habitualmente en Argentina,
-    productos recomendados por mí
-    la posibilidad de sumar los alimentos y suplementos que desees, de manera manual, o automáticamente desde la base de datos de la USDA
-    y múltiples opciones para adaptar los planes según cada paciente.
+Access a customizable database with 450+ foods and supplements commonly used, organized by categories.
 
-📄 Exportar planes nutricionales en PDF
+Includes:
 
-Podés imprimir o enviar fácilmente los planes nutricionales a tus clientes en formato PDF.
-¿Por qué trabajar con una aplicación online?
-🔒 Tus datos siempre protegidos
+    supplements commonly used in Argentina,
+    products recommended by the author
+    the ability to add foods and supplements manually, or automatically from the USDA database
+    and multiple options to adapt plans for each patient.
 
-Toda la información se almacena de forma segura y solo vos podés acceder a ella.
-💻 Compatible con cualquier dispositivo
+Export nutritional plans to PDF
 
-Podés utilizar el formulador desde:
+Easily print or send nutritional plans to your clients in PDF format.
 
-    computadora,
+Why work with an online application?
+
+Your data always protected
+
+All information is stored securely and only you can access it.
+
+Compatible with any device
+
+You can use the formulator from:
+
+    computer,
     tablet,
-    o smartphone,
+    or smartphone,
 
-sin importar el sistema operativo ni la antigüedad del equipo, siempre que cuente con conexión a Internet.
-🔄 Actualizaciones automáticas y constantes
+regardless of the operating system or device age, as long as it has an internet connection.
 
-El sistema se actualiza de manera continua, incorporando mejoras y nuevas funciones sin necesidad de instalaciones ni intervenciones manuales.
+Automatic and constant updates
 
+The system is continuously updated, incorporating improvements and new features without the need for installations or manual interventions.
 
-Que es el formulador
+What is the formulator
 
-Es una aplicación web para veterinarios que se dedican a nutrición natural.
+It is a web application for veterinarians who specialize in natural nutrition.
 
-Permite la realización de planes nutricionales completos, crudos, cocidos, mixtos.
+It enables the creation of complete nutritional plans: raw, cooked, or mixed.
 
-Se basa en lineamientos del NRC, utilizando los requerimientos calculados en base al recomendado por peso metabólico
+It is based on NRC guidelines, using requirements calculated from metabolic body weight recommendations.
 
-Guarda la información de tus pacientes junto con fotos de su condición corporal, planes nutricionales, controles y más
+It stores patient information along with body condition photos, nutritional plans, checkups, and more.

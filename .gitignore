@@ -1,9 +1,9 @@
 # ==============================================================================
-# Spring Boot + Gradle - gitignore compuesto
+# Spring Boot + Gradle - Combined gitignore
 # ==============================================================================
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# SEGURIDAD - Datos sensibles
+# SECURITY - Sensitive data
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 *.crt
@@ -92,7 +92,7 @@ hs_err_pid*
 out/
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# DESARROLLO & RUNTIME
+# DEVELOPMENT & RUNTIME
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 *.log
@@ -110,7 +110,7 @@ logs/
 *.obj
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# CERTIFICADOS & KEYS
+# CERTIFICATES & KEYS
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 *.cer
@@ -196,10 +196,10 @@ node_modules
 /.kotlin/
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# PROYECTO - Diet Formulator
+# PROJECT - Diet Formulator
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# Libro NRC - Copyright 2006 National Academy of Sciences
-# NO distribuir. Solo referencia bibliográfica.
+# NRC Book - Copyright 2006 National Academy of Sciences
+# Do NOT distribute. Bibliographic reference only.
 docs/nrc-nutrient-requirements-dogs-cats.md
 docs/nrc-nutrient-requirements-dogs-cats.epub
