@@ -1,0 +1,77 @@
+Textos presentes en https://medvetpreventiva.com/page/formulador-de-dietas (el formulador del cuál nos inspiramos)
+
+Empezá a ejercer la nutrición de manera profesional, práctica y con la certeza de estar haciendo los planes nutricionales de tus pacientes correctamente.
+
+    Calculá requerimientos del paciente y guardá toda la información de tus consultas nutricionales en el mismo lugar.
+    Visualizá deficiencias y excesos de las dietas, ajustandolas rápidamente
+    Adaptá dietas a cada paciente verificando el aporte de cada nutriente en materia seca.
+    Incorporá alimentos, suplementos con los que trabajas.
+    Ingresá menús comerciales y verifica el aporte de cada nutriente, cubrí deficiencias de los mismos y equilibrá cantidades en casos de excesos.
+    Ganá seguridad y confianza al formular
+
+Sobre el Formulador MVP
+
+El Formulador MVP es una aplicación online diseñada para que veterinarios puedan elaborar dietas caseras equilibradas de manera práctica, organizada y precisa.
+
+Cuenta con una interfaz simple e intuitiva que te permite formular planes nutricionales individualizados teniendo en cuenta los requerimientos nutricionales calculados según el peso metabólico del paciente, basados en los estándares del NRC. Algunos valores y relaciones nutricionales han sido ajustados según el criterio clínico de la médica veterinaria Trinidad Achterberg Barros.
+¿Qué podés hacer con el formulador?
+📋 Centralizar toda la información de tus pacientes
+
+Guardá en un mismo lugar:
+
+    datos clínicos,
+    planes nutricionales,
+    controles,
+    evolución de peso,
+    y fotografías de condición corporal.
+
+🥩 Elaborar planes nutricionales equilibrados
+
+Formulá dietas naturales adaptadas a las necesidades individuales de cada paciente, contemplando:
+
+    requerimientos nutricionales,
+    patologías,
+    preferencias alimentarias,
+    y objetivos específicos del manejo nutricional.
+
+🍖 Trabajar con una amplia base de alimentos y suplementos
+
+Accedé a una base de datos personalizable con +450 alimentos y suplementos de uso frecuente, organizados por categorías.
+
+Incluye:
+
+    suplementos utilizados habitualmente en Argentina,
+    productos recomendados por mí
+    la posibilidad de sumar los alimentos y suplementos que desees, de manera manual, o automáticamente desde la base de datos de la USDA
+    y múltiples opciones para adaptar los planes según cada paciente.
+
+📄 Exportar planes nutricionales en PDF
+
+Podés imprimir o enviar fácilmente los planes nutricionales a tus clientes en formato PDF.
+¿Por qué trabajar con una aplicación online?
+🔒 Tus datos siempre protegidos
+
+Toda la información se almacena de forma segura y solo vos podés acceder a ella.
+💻 Compatible con cualquier dispositivo
+
+Podés utilizar el formulador desde:
+
+    computadora,
+    tablet,
+    o smartphone,
+
+sin importar el sistema operativo ni la antigüedad del equipo, siempre que cuente con conexión a Internet.
+🔄 Actualizaciones automáticas y constantes
+
+El sistema se actualiza de manera continua, incorporando mejoras y nuevas funciones sin necesidad de instalaciones ni intervenciones manuales.
+
+
+Que es el formulador
+
+Es una aplicación web para veterinarios que se dedican a nutrición natural.
+
+Permite la realización de planes nutricionales completos, crudos, cocidos, mixtos.
+
+Se basa en lineamientos del NRC, utilizando los requerimientos calculados en base al recomendado por peso metabólico
+
+Guarda la información de tus pacientes junto con fotos de su condición corporal, planes nutricionales, controles y más
