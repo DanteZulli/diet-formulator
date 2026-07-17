@@ -9,23 +9,20 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.dantezulli.diet_formulator.model.Food;
 import ar.dantezulli.diet_formulator.model.enums.TipoAlimento;
 import ar.dantezulli.diet_formulator.repository.FoodRepository;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Service for Food CRUD operations.
- * Servicio para operaciones CRUD de Food.
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class FoodService {
 
     private final FoodRepository repository;
 
-    public FoodService(FoodRepository repository) {
-        this.repository = repository;
-    }
-
     /**
-     * Returns all foods. / Retorna todos los alimentos.
+     * Returns all foods.
      */
     @Transactional(readOnly = true)
     public List<Food> findAll() {
@@ -33,7 +30,7 @@ public class FoodService {
     }
 
     /**
-     * Finds a food by ID. / Busca un alimento por ID.
+     * Finds a food by ID.
      */
     @Transactional(readOnly = true)
     public Optional<Food> findById(Long id) {
@@ -41,7 +38,7 @@ public class FoodService {
     }
 
     /**
-     * Finds foods by type. / Busca alimentos por tipo.
+     * Finds foods by type.
      */
     @Transactional(readOnly = true)
     public List<Food> findByTipo(TipoAlimento tipo) {
@@ -49,7 +46,7 @@ public class FoodService {
     }
 
     /**
-     * Searches foods by name. / Busca alimentos por nombre.
+     * Searches foods by name.
      */
     @Transactional(readOnly = true)
     public List<Food> search(String query) {
@@ -57,14 +54,14 @@ public class FoodService {
     }
 
     /**
-     * Saves a food. / Guarda un alimento.
+     * Saves a food.
      */
     public Food save(Food food) {
         return repository.save(food);
     }
 
     /**
-     * Deletes a food by ID. / Elimina un alimento por ID.
+     * Deletes a food by ID.
      */
     public void deleteById(Long id) {
         repository.deleteById(id);

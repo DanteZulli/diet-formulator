@@ -16,25 +16,21 @@ import ar.dantezulli.diet_formulator.model.MacronutrientTargets;
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
 import ar.dantezulli.diet_formulator.model.enums.UnidadCantidad;
 import ar.dantezulli.diet_formulator.repository.DietRepository;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Service for Diet CRUD and nutrient calculations.
- * Servicio para CRUD de Dietas y cálculos nutricionales.
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class DietService {
 
     private final DietRepository repository;
     private final EnergyCalculator energyCalculator;
 
-    public DietService(DietRepository repository, EnergyCalculator energyCalculator) {
-        this.repository = repository;
-        this.energyCalculator = energyCalculator;
-    }
-
     /**
-     * Returns all diets. / Retorna todas las dietas.
+     * Returns all diets.
      */
     @Transactional(readOnly = true)
     public List<Diet> findAll() {
@@ -42,7 +38,7 @@ public class DietService {
     }
 
     /**
-     * Finds a diet by ID. / Busca una dieta por ID.
+     * Finds a diet by ID.
      */
     @Transactional(readOnly = true)
     public Optional<Diet> findById(Long id) {
@@ -50,7 +46,7 @@ public class DietService {
     }
 
     /**
-     * Finds all diets for a given profile. / Busca todas las dietas para un perfil dado.
+     * Finds all diets for a given profile.
      */
     @Transactional(readOnly = true)
     public List<Diet> findByProfileId(Long profileId) {
@@ -58,28 +54,28 @@ public class DietService {
     }
 
     /**
-     * Saves a diet. / Guarda una dieta.
+     * Saves a diet.
      */
     public Diet save(Diet diet) {
         return repository.save(diet);
     }
 
     /**
-     * Deletes a diet by ID. / Elimina una dieta por ID.
+     * Deletes a diet by ID.
      */
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
 
     /**
-     * Adds a food item to a diet. / Agrega un ítem de alimento a una dieta.
+     * Adds a food item to a diet.
      *
-     * @param dietId the diet ID / ID de la dieta
-     * @param foodId the food ID / ID del alimento
-     * @param cantidad quantity / cantidad
-     * @param unidad unit / unidad
-     * @param tipoCoccion cooking type (optional) / tipo de cocción (opcional)
-     * @return the updated diet / la dieta actualizada
+     * @param dietId the diet ID
+     * @param foodId the food ID
+     * @param cantidad quantity
+     * @param unidad unit
+     * @param tipoCoccion cooking type (optional)
+     * @return the updated diet
      */
     public Diet addItem(Long dietId, Long foodId, Double cantidad, UnidadCantidad unidad, String tipoCoccion) {
         Diet diet = repository.findById(dietId)
@@ -96,7 +92,7 @@ public class DietService {
     }
 
     /**
-     * Removes an item from a diet. / Elimina un ítem de una dieta.
+     * Removes an item from a diet.
      */
     public Diet removeItem(Long dietId, Long itemId) {
         Diet diet = repository.findById(dietId)
@@ -108,13 +104,11 @@ public class DietService {
 
     /**
      * Calculates total nutrient values from all diet items.
-     * Calcula valores totales de nutrientes de todos los ítems de la dieta.
      *
      * Each food's nutrients are scaled by (item quantity / 100) since food values are per 100g.
-     * Los nutrientes de cada alimento se escalan por (cantidad del ítem / 100) ya que los valores son por 100g.
      *
-     * @param diet the diet to calculate / la dieta a calcular
-     * @return map of nutrient to total value / mapa de nutriente a valor total
+     * @param diet the diet to calculate
+     * @return map of nutrient to total value
      */
     public Map<Nutrient, Double> calculateTotalNutrients(Diet diet) {
         Map<Nutrient, Double> totals = new EnumMap<>(Nutrient.class);
@@ -123,8 +117,6 @@ public class DietService {
             Food food = item.getFood();
             Double quantity = item.getCantidad();
 
-            // Scale factor: quantity in grams / 100 (food values are per 100g)
-            // Factor de escala: cantidad en gramos / 100 (valores de alimento son por 100g)
             double scale = quantity / 100.0;
 
             for (Map.Entry<Nutrient, Double> entry : food.getNutrientes().entrySet()) {
@@ -137,13 +129,11 @@ public class DietService {
 
     /**
      * Calculates the nutrient comparison table for a diet.
-     * Calcula la tabla de comparación de nutrientes para una dieta.
      *
      * Returns a map of each nutrient to its total, target, and percentage of target.
-     * Retorna un mapa de cada nutriente a su total, objetivo, y porcentaje del objetivo.
      *
-     * @param diet the diet to analyze / la dieta a analizar
-     * @return nutrient summary / resumen de nutrientes
+     * @param diet the diet to analyze
+     * @return nutrient summary
      */
     public Map<Nutrient, NutrientSummary> calculateNutrientSummary(Diet diet) {
         Map<Nutrient, Double> totals = calculateTotalNutrients(diet);
@@ -152,7 +142,6 @@ public class DietService {
 
         Map<Nutrient, NutrientSummary> summary = new EnumMap<>(Nutrient.class);
 
-        // Calculate target values from macronutrient targets / Calcular valores objetivo desde objetivos de macros
         MacronutrientTargets targets = profile.getMacronutrientTargets();
 
         for (Nutrient nutrient : Nutrient.values()) {
@@ -168,32 +157,28 @@ public class DietService {
 
     /**
      * Calculates the target value for a specific nutrient based on profile targets.
-     * Calcula el valor objetivo para un nutriente específico según los objetivos del perfil.
      */
     private Double calculateTarget(Nutrient nutrient, MacronutrientTargets targets, double recommendedIntake) {
         if (targets == null) return null;
 
-        // Only calculate targets for macronutrients based on percentage targets
-        // Solo calcular objetivos para macronutrientes basado en porcentajes objetivo
         return switch (nutrient) {
-            case PROTEINA_G -> recommendedIntake * (targets.getProteinPct() / 100.0) / 4.0; // 4 kcal/g protein
-            case LIPIDOS_TOTALES_G -> recommendedIntake * (targets.getFatPct() / 100.0) / 9.0; // 9 kcal/g fat
-            case CARBOHIDRATOS_G -> recommendedIntake * (targets.getCarbohydratePct() / 100.0) / 4.0; // 4 kcal/g carbs
+            case PROTEINA_G -> recommendedIntake * (targets.getProteinPct() / 100.0) / 4.0;
+            case LIPIDOS_TOTALES_G -> recommendedIntake * (targets.getFatPct() / 100.0) / 9.0;
+            case CARBOHIDRATOS_G -> recommendedIntake * (targets.getCarbohydratePct() / 100.0) / 4.0;
             case ENERGIA_KCAL -> recommendedIntake;
-            default -> null; // Other nutrients need NRC tables (not yet implemented)
+            default -> null;
         };
     }
 
     /**
      * Summary data for a single nutrient in the diet table.
-     * Datos de resumen para un nutriente individual en la tabla de dieta.
      */
     public record NutrientSummary(
-        /** Total amount from all food items. / Cantidad total de todos los ítems. */
+        /** Total amount from all food items. */
         Double total,
-        /** Target value from profile. / Valor objetivo del perfil. */
+        /** Target value from profile. */
         Double target,
-        /** Percentage of target achieved (%). / Porcentaje del objetivo alcanzado (%). */
+        /** Percentage of target achieved (%). */
         Double pctTarget
     ) {}
 }

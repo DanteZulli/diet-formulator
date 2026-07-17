@@ -15,23 +15,20 @@ import ar.dantezulli.diet_formulator.model.Food;
 import ar.dantezulli.diet_formulator.model.enums.TipoAlimento;
 import ar.dantezulli.diet_formulator.model.enums.UnidadPorcion;
 import ar.dantezulli.diet_formulator.service.FoodService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Controller for food management.
- * Controlador para gestión de alimentos.
  */
 @Controller
 @RequestMapping("/foods")
+@RequiredArgsConstructor
 public class FoodController {
 
     private final FoodService foodService;
 
-    public FoodController(FoodService foodService) {
-        this.foodService = foodService;
-    }
-
     /**
-     * Lists all foods with optional search. / Lista todos los alimentos con búsqueda opcional.
+     * Lists all foods with optional search.
      */
     @GetMapping
     public String list(@RequestParam(required = false) String search, Model model) {
@@ -47,7 +44,7 @@ public class FoodController {
     }
 
     /**
-     * Shows the create food form. / Muestra el formulario de creación de alimento.
+     * Shows the create food form.
      */
     @GetMapping("/new")
     public String createForm(Model model) {
@@ -57,7 +54,7 @@ public class FoodController {
     }
 
     /**
-     * Shows the edit food form. / Muestra el formulario de edición de alimento.
+     * Shows the edit food form.
      */
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
@@ -69,7 +66,7 @@ public class FoodController {
     }
 
     /**
-     * Saves a food (create or update). / Guarda un alimento (crear o actualizar).
+     * Saves a food (create or update).
      */
     @PostMapping
     public String save(@ModelAttribute Food food) {
@@ -78,7 +75,7 @@ public class FoodController {
     }
 
     /**
-     * Deletes a food. / Elimina un alimento.
+     * Deletes a food.
      */
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {

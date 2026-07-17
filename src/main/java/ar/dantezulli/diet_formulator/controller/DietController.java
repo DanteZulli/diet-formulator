@@ -19,27 +19,22 @@ import ar.dantezulli.diet_formulator.model.enums.UnidadCantidad;
 import ar.dantezulli.diet_formulator.service.AnimalProfileService;
 import ar.dantezulli.diet_formulator.service.DietService;
 import ar.dantezulli.diet_formulator.service.FoodService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Controller for diet management.
- * Controlador para gestión de dietas.
  */
 @Controller
 @RequestMapping("/diets")
+@RequiredArgsConstructor
 public class DietController {
 
     private final DietService dietService;
     private final AnimalProfileService profileService;
     private final FoodService foodService;
 
-    public DietController(DietService dietService, AnimalProfileService profileService, FoodService foodService) {
-        this.dietService = dietService;
-        this.profileService = profileService;
-        this.foodService = foodService;
-    }
-
     /**
-     * Lists all diets. / Lista todas las dietas.
+     * Lists all diets.
      */
     @GetMapping
     public String list(Model model) {
@@ -49,7 +44,7 @@ public class DietController {
     }
 
     /**
-     * Shows the create diet form. / Muestra el formulario de creación de dieta.
+     * Shows the create diet form.
      */
     @GetMapping("/new")
     public String createForm(@RequestParam(required = false) Long profileId, Model model) {
@@ -66,7 +61,7 @@ public class DietController {
     }
 
     /**
-     * Saves a new diet. / Guarda una nueva dieta.
+     * Saves a new diet.
      */
     @PostMapping
     public String save(Diet diet) {
@@ -81,7 +76,7 @@ public class DietController {
     }
 
     /**
-     * Shows a diet with its nutrient table. / Muestra una dieta con su tabla de nutrientes.
+     * Shows a diet with its nutrient table.
      */
     @GetMapping("/{id}")
     public String view(@PathVariable Long id, Model model) {
@@ -100,7 +95,7 @@ public class DietController {
     }
 
     /**
-     * Adds a food item to a diet. / Agrega un ítem de alimento a una dieta.
+     * Adds a food item to a diet.
      */
     @PostMapping("/{id}/items")
     public String addItem(@PathVariable Long id,
@@ -113,7 +108,7 @@ public class DietController {
     }
 
     /**
-     * Removes a food item from a diet. / Elimina un ítem de alimento de una dieta.
+     * Removes a food item from a diet.
      */
     @PostMapping("/{dietId}/items/{itemId}/delete")
     public String removeItem(@PathVariable Long dietId, @PathVariable Long itemId) {
@@ -122,7 +117,7 @@ public class DietController {
     }
 
     /**
-     * Deletes a diet. / Elimina una dieta.
+     * Deletes a diet.
      */
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {

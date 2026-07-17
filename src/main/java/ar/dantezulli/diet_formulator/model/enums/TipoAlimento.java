@@ -2,22 +2,21 @@ package ar.dantezulli.diet_formulator.model.enums;
 
 /**
  * Type of food.
- * Tipo de alimento.
  */
 public enum TipoAlimento {
 
-    /** Animal source (meat, fish, eggs, etc.). / Fuente animal (carne, pescado, huevos, etc.). */
+    /** Animal source (meat, fish, eggs, etc.). */
     ANIMAL,
 
-    /** Supplement (vitamins, minerals, etc.). / Suplemento (vitaminas, minerales, etc.). */
+    /** Supplement (vitamins, minerals, etc.). */
     SUPLEMENTO,
 
-    /** Cooked starch (rice, pasta, etc.). / Almidón cocido (arroz, pasta, etc.). */
+    /** Cooked starch (rice, pasta, etc.). */
     ALMIDON_COCIDO,
 
-    /** Other plants (vegetables, fruits, etc.). / Otras plantas (verduras, frutas, etc.). */
+    /** Other plants (vegetables, fruits, etc.). */
     OTRAS_PLANTAS,
 
-    /** Recipe (compound food). / Receta (alimento compuesto). */
+    /** Recipe (compound food). */
     RECETA
 }

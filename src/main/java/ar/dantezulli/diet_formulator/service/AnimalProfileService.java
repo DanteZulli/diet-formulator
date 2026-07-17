@@ -7,27 +7,22 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.dantezulli.diet_formulator.model.AnimalProfile;
-import ar.dantezulli.diet_formulator.model.MacronutrientTargets;
 import ar.dantezulli.diet_formulator.repository.AnimalProfileRepository;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Service for AnimalProfile CRUD operations and energy calculations.
- * Servicio para operaciones CRUD de AnimalProfile y cálculos energéticos.
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AnimalProfileService {
 
     private final AnimalProfileRepository repository;
     private final EnergyCalculator energyCalculator;
 
-    public AnimalProfileService(AnimalProfileRepository repository, EnergyCalculator energyCalculator) {
-        this.repository = repository;
-        this.energyCalculator = energyCalculator;
-    }
-
     /**
-     * Returns all profiles. / Retorna todos los perfiles.
+     * Returns all profiles.
      */
     @Transactional(readOnly = true)
     public List<AnimalProfile> findAll() {
@@ -35,7 +30,7 @@ public class AnimalProfileService {
     }
 
     /**
-     * Finds a profile by ID. / Busca un perfil por ID.
+     * Finds a profile by ID.
      */
     @Transactional(readOnly = true)
     public Optional<AnimalProfile> findById(Long id) {
@@ -44,10 +39,9 @@ public class AnimalProfileService {
 
     /**
      * Saves a profile and calculates its caloric intake.
-     * Guarda un perfil y calcula su ingesta calórica.
      *
-     * @param profile the profile to save / el perfil a guardar
-     * @return the saved profile with calculated values / el perfil guardado con valores calculados
+     * @param profile the profile to save
+     * @return the saved profile with calculated values
      */
     public AnimalProfile save(AnimalProfile profile) {
         validateProfile(profile);
@@ -56,7 +50,7 @@ public class AnimalProfileService {
     }
 
     /**
-     * Deletes a profile by ID. / Elimina un perfil por ID.
+     * Deletes a profile by ID.
      */
     public void deleteById(Long id) {
         repository.deleteById(id);
@@ -64,13 +58,9 @@ public class AnimalProfileService {
 
     /**
      * Calculates the caloric intake based on profile settings.
-     * Calcula la ingesta calórica según la configuración del perfil.
      *
      * If "use recommended" is enabled, uses the NRC-calculated value.
-     * Si "usar recomendado" está habilitado, usa el valor calculado por NRC.
-     *
      * Otherwise, uses the custom value provided by the veterinarian.
-     * Si no, usa el valor personalizado provisto por el veterinario.
      */
     private void calculateCaloricIntake(AnimalProfile profile) {
         double recommended = energyCalculator.calculateRecommendedIntake(profile);
@@ -79,9 +69,8 @@ public class AnimalProfileService {
 
     /**
      * Validates profile data before saving.
-     * Valida datos del perfil antes de guardar.
      *
-     * @throws IllegalArgumentException if validation fails / si la validación falla
+     * @throws IllegalArgumentException if validation fails
      */
     private void validateProfile(AnimalProfile profile) {
         if (profile.getNombre() == null || profile.getNombre().isBlank()) {
@@ -98,7 +87,6 @@ public class AnimalProfileService {
             throw new IllegalArgumentException("La condición corporal debe ser entre 1 y 5 / Body condition must be between 1 and 5");
         }
 
-        // Validate pregnancy/lactation fields / Validar campos de preñez/lactancia
         if (profile.getLifeStage() != null) {
             switch (profile.getLifeStage()) {
                 case LACTANCIA -> {

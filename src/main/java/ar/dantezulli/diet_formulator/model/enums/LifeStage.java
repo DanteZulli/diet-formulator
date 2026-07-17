@@ -2,19 +2,18 @@ package ar.dantezulli.diet_formulator.model.enums;
 
 /**
  * Life stage of the animal.
- * Etapa de vida del animal.
  */
 public enum LifeStage {
 
-    /** Adult. / Adulto. */
+    /** Adult. */
     ADULTO,
 
-    /** Puppy / Kitten. / Cachorro. */
+    /** Puppy / Kitten. */
     CACHORRO,
 
-    /** Pregnant. / Preñada. */
+    /** Pregnant. */
     PREÑADA,
 
-    /** Lactating. / Lactancia. */
+    /** Lactating. */
     LACTANCIA
 }

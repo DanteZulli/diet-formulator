@@ -2,36 +2,33 @@ package ar.dantezulli.diet_formulator.model.enums;
 
 /**
  * Activity level of the animal, ordered from highest to lowest.
- * Nivel de actividad del animal, ordenado de mayor a menor.
  *
  * The activity factor is used to calculate the daily caloric intake
  * (MER - Maintenance Energy Requirement) based on NRC standards.
- * El factor de actividad se usa para calcular la ingesta calórica diaria
- * (MER - Requisito Energético de Mantenimiento) según estándares NRC.
  */
 public enum NivelActividad {
 
-    /** Great Dane / Active Greyhound. / Gran Danés / Galgo activo. */
+    /** Great Dane / Active Greyhound. */
     GRAN_DANES,
 
-    /** Terrier. / Terrier. */
+    /** Terrier. */
     TERRIER,
 
-    /** Very active. / Muy activo. */
+    /** Very active. */
     MUY_ACTIVO,
 
-    /** Active. / Activo. */
+    /** Active. */
     ACTIVO,
 
-    /** Young adult. / Adulto joven. */
+    /** Young adult. */
     ADULTO_JOVEN,
 
-    /** Inactive, senior. / Inactivo, senior. */
+    /** Inactive, senior. */
     INACTIVO_SENIOR,
 
-    /** Kennel dog, very inactive. / Perro canil, muy inactivo. */
+    /** Kennel dog, very inactive. */
     CANIL_MUY_INACTIVO,
 
-    /** Sedentary. / Sedentario. */
+    /** Sedentary. */
     SEDENTARIO
 }

@@ -16,23 +16,20 @@ import ar.dantezulli.diet_formulator.model.enums.Especie;
 import ar.dantezulli.diet_formulator.model.enums.LifeStage;
 import ar.dantezulli.diet_formulator.model.enums.NivelActividad;
 import ar.dantezulli.diet_formulator.service.AnimalProfileService;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Controller for animal profile management.
- * Controlador para gestión de perfiles de animales.
  */
 @Controller
 @RequestMapping("/profiles")
+@RequiredArgsConstructor
 public class ProfileController {
 
     private final AnimalProfileService profileService;
 
-    public ProfileController(AnimalProfileService profileService) {
-        this.profileService = profileService;
-    }
-
     /**
-     * Lists all profiles. / Lista todos los perfiles.
+     * Lists all profiles.
      */
     @GetMapping
     public String list(Model model) {
@@ -42,7 +39,7 @@ public class ProfileController {
     }
 
     /**
-     * Shows the create profile form. / Muestra el formulario de creación de perfil.
+     * Shows the create profile form.
      */
     @GetMapping("/new")
     public String createForm(Model model) {
@@ -54,7 +51,7 @@ public class ProfileController {
     }
 
     /**
-     * Shows the edit profile form. / Muestra el formulario de edición de perfil.
+     * Shows the edit profile form.
      */
     @GetMapping("/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
@@ -66,7 +63,7 @@ public class ProfileController {
     }
 
     /**
-     * Saves a profile (create or update). / Guarda un perfil (crear o actualizar).
+     * Saves a profile (create or update).
      */
     @PostMapping
     public String save(AnimalProfile profile, BindingResult result, Model model) {
@@ -87,7 +84,7 @@ public class ProfileController {
     }
 
     /**
-     * Deletes a profile. / Elimina un perfil.
+     * Deletes a profile.
      */
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {
@@ -95,10 +92,6 @@ public class ProfileController {
         return "redirect:/profiles";
     }
 
-    /**
-     * Adds enum options to the model for form dropdowns.
-     * Agrega opciones de enums al modelo para selects del formulario.
-     */
     private void addEnumOptions(Model model) {
         model.addAttribute("especies", Especie.values());
         model.addAttribute("lifeStages", LifeStage.values());
