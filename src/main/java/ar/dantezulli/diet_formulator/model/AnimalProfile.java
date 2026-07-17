@@ -12,20 +12,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-import ar.dantezulli.diet_formulator.model.enums.Especie;
+import ar.dantezulli.diet_formulator.model.enums.Species;
 import ar.dantezulli.diet_formulator.model.enums.LifeStage;
-import ar.dantezulli.diet_formulator.model.enums.NivelActividad;
+import ar.dantezulli.diet_formulator.model.enums.ActivityLevel;
 import lombok.Data;
 
-/**
- * Animal patient profile.
- *
- * Stores all patient data needed for diet formulation:
- * - Basic identification (name, species, breed)
- * - Physical attributes (weight, age, body condition)
- * - Energy requirements (activity level, caloric intake)
- * - Macronutrient targets
- */
 @Data
 @Entity
 @Table(name = "animal_profile")
@@ -36,76 +27,76 @@ public class AnimalProfile {
     private Long id;
 
     @Column(nullable = false)
-    private String nombre;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Especie especie;
+    private Species species;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private LifeStage lifeStage;
 
     @Column(nullable = false)
-    private Double pesoKg;
+    private Double weightKg;
 
-    private Double pesoIdealKg;
-
-    @Column(nullable = false)
-    private Boolean enPesoIdeal = true;
+    private Double idealWeightKg;
 
     @Column(nullable = false)
-    private Integer edadMeses;
-
-    private String raza;
+    private Boolean atIdealWeight = true;
 
     @Column(nullable = false)
-    private Integer condicionCorporal;
+    private Integer ageMonths;
+
+    private String breed;
 
     @Column(nullable = false)
-    private Boolean peloNegro = false;
+    private Integer bodyCondition;
+
+    @Column(nullable = false)
+    private Boolean blackCoat = false;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private NivelActividad nivelActividad;
+    private ActivityLevel activityLevel;
 
-    private Double pesoAdultoCachorro;
-
-    @Column(nullable = false)
-    private Boolean sobrepeso = false;
-
-    private Integer numCachorrosLactancia;
-
-    private Integer semanasLactancia;
-
-    private Double ingestaCaloricaCustom;
+    private Double adultWeightPuppy;
 
     @Column(nullable = false)
-    private Boolean usarIngestaRecomendada = true;
+    private Boolean overweight = false;
+
+    private Integer puppyCount;
+
+    private Integer lactationWeeks;
+
+    private Double customCaloricIntake;
 
     @Column(nullable = false)
-    private Double ingestaCaloricaRecomendada;
+    private Boolean useRecommendedIntake = true;
+
+    @Column(nullable = false)
+    private Double recommendedCaloricIntake;
 
     @Embedded
     private MacronutrientTargets macronutrientTargets;
 
     @Column(columnDefinition = "TEXT")
-    private String notas;
+    private String notes;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime fechaCreacion;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime fechaModificacion;
+    private LocalDateTime updatedAt;
 
     @jakarta.persistence.PrePersist
     protected void onCreate() {
-        fechaCreacion = LocalDateTime.now();
-        fechaModificacion = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     @jakarta.persistence.PreUpdate
     protected void onUpdate() {
-        fechaModificacion = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 }

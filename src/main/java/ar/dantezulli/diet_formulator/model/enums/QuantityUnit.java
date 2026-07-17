@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum LifeStage {
+public enum QuantityUnit {
 
-    ADULT("Adulto"),
-    PUPPY("Cachorro"),
-    PREGNANT("Preñada"),
-    LACTATING("Lactancia");
+    GRAMS("Gramos"),
+    MILLIGRAMS("Miligramos"),
+    CAPSULES("Cápsulas"),
+    UNITS("Unidades");
 
     private final String displayName;
 }

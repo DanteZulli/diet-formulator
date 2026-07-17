@@ -31,128 +31,121 @@
         <h2 th:text="${profile.id != null} ? 'Editar Perfil' : 'Nuevo Perfil'">Perfil</h2>
 
         <form th:action="@{/profiles}" th:object="${profile}" method="post" class="needs-validation" novalidate>
-
-            <!-- Hidden ID for updates / ID oculto para actualizaciones -->
             <input type="hidden" th:field="*{id}">
 
-            <!-- Basic data / Datos básicos -->
             <div class="card mb-4">
                 <div class="card-header"><h5>Datos del Animal</h5></div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" th:field="*{name}" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="especie" class="form-label">Especie</label>
-                            <select class="form-select" id="especie" th:field="*{especie}" required>
+                            <label for="species" class="form-label">Especie</label>
+                            <select class="form-select" id="species" th:field="*{species}" required>
                                 <option value="">Seleccionar...</option>
-                                <option th:each="e : ${especies}" th:value="${e}" th:text="${e}"></option>
+                                <option th:each="s : ${species}" th:value="${s}" th:text="${s.displayName}"></option>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="lifeStage" class="form-label">Etapa de Vida</label>
                             <select class="form-select" id="lifeStage" th:field="*{lifeStage}" required>
                                 <option value="">Seleccionar...</option>
-                                <option th:each="ls : ${lifeStages}" th:value="${ls}" th:text="${ls}"></option>
+                                <option th:each="ls : ${lifeStages}" th:value="${ls}" th:text="${ls.displayName}"></option>
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="raza" class="form-label">Raza</label>
-                            <input type="text" class="form-control" id="raza" th:field="*{raza}">
+                            <label for="breed" class="form-label">Raza</label>
+                            <input type="text" class="form-control" id="breed" th:field="*{breed}">
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="pesoKg" class="form-label">Peso (kg)</label>
-                            <input type="number" step="0.1" class="form-control" id="pesoKg" th:field="*{pesoKg}" required>
+                            <label for="weightKg" class="form-label">Peso (kg)</label>
+                            <input type="number" step="0.1" class="form-control" id="weightKg" th:field="*{weightKg}" required>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="edadMeses" class="form-label">Edad (meses)</label>
-                            <input type="number" class="form-control" id="edadMeses" th:field="*{edadMeses}" required>
+                            <label for="ageMonths" class="form-label">Edad (meses)</label>
+                            <input type="number" class="form-control" id="ageMonths" th:field="*{ageMonths}" required>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="condicionCorporal" class="form-label">Condición Corporal (1-5)</label>
-                            <input type="number" min="1" max="5" class="form-control" id="condicionCorporal" th:field="*{condicionCorporal}" required>
+                            <label for="bodyCondition" class="form-label">Condición Corporal (1-5)</label>
+                            <input type="number" min="1" max="5" class="form-control" id="bodyCondition" th:field="*{bodyCondition}" required>
                         </div>
                         <div class="col-md-4 mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="peloNegro" th:field="*{peloNegro}">
-                            <label class="form-check-label" for="peloNegro">Tiene el pelo negro</label>
+                            <input type="checkbox" class="form-check-input" id="blackCoat" th:field="*{blackCoat}">
+                            <label class="form-check-label" for="blackCoat">Tiene el pelo negro</label>
                         </div>
                         <div class="col-md-4 mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="sobrepeso" th:field="*{sobrepeso}">
-                            <label class="form-check-label" for="sobrepeso">Tiene sobrepeso (gatos)</label>
+                            <input type="checkbox" class="form-check-input" id="overweight" th:field="*{overweight}">
+                            <label class="form-check-label" for="overweight">Tiene sobrepeso (gatos)</label>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Puppy-specific / Específico para cachorros -->
             <div class="card mb-4" id="puppySection" style="display: none;">
                 <div class="card-header"><h5>Datos de Cachorro</h5></div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="pesoAdultoCachorro" class="form-label">Peso de Adulto (kg)</label>
-                            <input type="number" step="0.1" class="form-control" id="pesoAdultoCachorro" th:field="*{pesoAdultoCachorro}">
+                            <label for="adultWeightPuppy" class="form-label">Peso de Adulto (kg)</label>
+                            <input type="number" step="0.1" class="form-control" id="adultWeightPuppy" th:field="*{adultWeightPuppy}">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Lactation-specific / Específico para lactancia -->
             <div class="card mb-4" id="lactationSection" style="display: none;">
                 <div class="card-header"><h5>Datos de Lactancia</h5></div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="numCachorrosLactancia" class="form-label">Número de Cachorros</label>
-                            <input type="number" min="1" class="form-control" id="numCachorrosLactancia" th:field="*{numCachorrosLactancia}">
+                            <label for="puppyCount" class="form-label">Número de Cachorros</label>
+                            <input type="number" min="1" class="form-control" id="puppyCount" th:field="*{puppyCount}">
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="semanasLactancia" class="form-label">Semanas de Lactancia (1-4)</label>
-                            <input type="number" min="1" max="4" class="form-control" id="semanasLactancia" th:field="*{semanasLactancia}">
+                            <label for="lactationWeeks" class="form-label">Semanas de Lactancia (1-4)</label>
+                            <input type="number" min="1" max="4" class="form-control" id="lactationWeeks" th:field="*{lactationWeeks}">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Energy requirements / Requisitos energéticos -->
             <div class="card mb-4">
                 <div class="card-header"><h5>Requisitos Energéticos</h5></div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="nivelActividad" class="form-label">Nivel de Actividad</label>
-                            <select class="form-select" id="nivelActividad" th:field="*{nivelActividad}" required>
+                            <label for="activityLevel" class="form-label">Nivel de Actividad</label>
+                            <select class="form-select" id="activityLevel" th:field="*{activityLevel}" required>
                                 <option value="">Seleccionar...</option>
-                                <option th:each="na : ${nivelesActividad}" th:value="${na}" th:text="${na}"></option>
+                                <option th:each="al : ${activityLevels}" th:value="${al}" th:text="${al.displayName}"></option>
                             </select>
                         </div>
                         <div class="col-md-3 mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="enPesoIdeal" th:field="*{enPesoIdeal}">
-                            <label class="form-check-label" for="enPesoIdeal">Está en su peso ideal</label>
+                            <input type="checkbox" class="form-check-input" id="atIdealWeight" th:field="*{atIdealWeight}">
+                            <label class="form-check-label" for="atIdealWeight">Está en su peso ideal</label>
                         </div>
-                        <div class="col-md-3 mb-3" id="pesoIdealSection" style="display: none;">
-                            <label for="pesoIdealKg" class="form-label">Peso Ideal (kg)</label>
-                            <input type="number" step="0.1" class="form-control" id="pesoIdealKg" th:field="*{pesoIdealKg}">
+                        <div class="col-md-3 mb-3" id="idealWeightSection" style="display: none;">
+                            <label for="idealWeightKg" class="form-label">Peso Ideal (kg)</label>
+                            <input type="number" step="0.1" class="form-control" id="idealWeightKg" th:field="*{idealWeightKg}">
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Ingesta Calórica Recomendada (kcal/día)</label>
-                            <input type="text" class="form-control" th:value="${profile.ingestaCaloricaRecomendada}" readonly>
+                            <input type="text" class="form-control" th:value="${profile.recommendedCaloricIntake}" readonly>
                         </div>
                         <div class="col-md-3 mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="usarIngestaRecomendada" th:field="*{usarIngestaRecomendada}">
-                            <label class="form-check-label" for="usarIngestaRecomendada">Usar ingesta recomendada</label>
+                            <input type="checkbox" class="form-check-input" id="useRecommendedIntake" th:field="*{useRecommendedIntake}">
+                            <label class="form-check-label" for="useRecommendedIntake">Usar ingesta recomendada</label>
                         </div>
                         <div class="col-md-3 mb-3" id="customIntakeSection" style="display: none;">
-                            <label for="ingestaCaloricaCustom" class="form-label">Ingesta Calórica Custom (kcal/día)</label>
-                            <input type="number" step="0.1" class="form-control" id="ingestaCaloricaCustom" th:field="*{ingestaCaloricaCustom}">
+                            <label for="customCaloricIntake" class="form-label">Ingesta Calórica Custom (kcal/día)</label>
+                            <input type="number" step="0.1" class="form-control" id="customCaloricIntake" th:field="*{customCaloricIntake}">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Macronutrient targets / Objetivos de macronutrientes -->
             <div class="card mb-4">
                 <div class="card-header"><h5>Objetivos de Macronutrientes</h5></div>
                 <div class="card-body">
@@ -185,16 +178,14 @@
                 </div>
             </div>
 
-            <!-- Notes / Notas -->
             <div class="card mb-4">
                 <div class="card-header"><h5>Motivo de la Consulta</h5></div>
                 <div class="card-body">
-                    <textarea class="form-control" rows="3" th:field="*{notas}"
+                    <textarea class="form-control" rows="3" th:field="*{notes}"
                               placeholder="Notas libres sobre la consulta..."></textarea>
                 </div>
             </div>
 
-            <!-- Submit / Enviar -->
             <div class="mb-4">
                 <button type="submit" class="btn btn-primary">Guardar Perfil</button>
                 <a th:href="@{/profiles}" class="btn btn-secondary">Cancelar</a>
@@ -206,20 +197,20 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var lifeStageSelect = document.getElementById('lifeStage');
-            var enPesoIdealCheck = document.getElementById('enPesoIdeal');
-            var usarIngestaCheck = document.getElementById('usarIngestaRecomendada');
+            var atIdealWeightCheck = document.getElementById('atIdealWeight');
+            var useRecommendedCheck = document.getElementById('useRecommendedIntake');
 
             function toggleSections() {
                 var stage = lifeStageSelect.value;
-                document.getElementById('puppySection').style.display = stage === 'CACHORRO' ? 'block' : 'none';
-                document.getElementById('lactationSection').style.display = stage === 'LACTANCIA' ? 'block' : 'none';
-                document.getElementById('pesoIdealSection').style.display = enPesoIdealCheck.checked ? 'none' : 'block';
-                document.getElementById('customIntakeSection').style.display = usarIngestaCheck.checked ? 'none' : 'block';
+                document.getElementById('puppySection').style.display = stage === 'PUPPY' ? 'block' : 'none';
+                document.getElementById('lactationSection').style.display = stage === 'LACTATING' ? 'block' : 'none';
+                document.getElementById('idealWeightSection').style.display = atIdealWeightCheck.checked ? 'none' : 'block';
+                document.getElementById('customIntakeSection').style.display = useRecommendedCheck.checked ? 'none' : 'block';
             }
 
             lifeStageSelect.addEventListener('change', toggleSections);
-            enPesoIdealCheck.addEventListener('change', toggleSections);
-            usarIngestaCheck.addEventListener('change', toggleSections);
+            atIdealWeightCheck.addEventListener('change', toggleSections);
+            useRecommendedCheck.addEventListener('change', toggleSections);
 
             toggleSections();
         });

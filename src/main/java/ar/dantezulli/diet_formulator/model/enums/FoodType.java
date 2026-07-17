@@ -5,12 +5,13 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum LifeStage {
+public enum FoodType {
 
-    ADULT("Adulto"),
-    PUPPY("Cachorro"),
-    PREGNANT("Preñada"),
-    LACTATING("Lactancia");
+    ANIMAL("Animal"),
+    SUPPLEMENT("Suplemento"),
+    COOKED_STARCH("Almidón cocido"),
+    OTHER_PLANTS("Otras plantas"),
+    RECIPE("Receta");
 
     private final String displayName;
 }

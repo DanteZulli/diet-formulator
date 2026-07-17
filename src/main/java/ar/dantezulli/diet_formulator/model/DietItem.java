@@ -15,13 +15,8 @@ import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import ar.dantezulli.diet_formulator.model.enums.UnidadCantidad;
+import ar.dantezulli.diet_formulator.model.enums.QuantityUnit;
 
-/**
- * Individual item within a diet (an ingredient with its quantity).
- *
- * Each diet item references a food and specifies how much of it is used.
- */
 @Data
 @NoArgsConstructor
 @Entity
@@ -41,26 +36,26 @@ public class DietItem {
     private Food food;
 
     @Column(nullable = false)
-    private Double cantidad;
+    private Double quantity;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UnidadCantidad unidad;
+    private QuantityUnit unit;
 
-    private String tipoCoccion;
+    private String cookingMethod;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime fechaCreacion;
+    private LocalDateTime createdAt;
 
     @jakarta.persistence.PrePersist
     protected void onCreate() {
-        fechaCreacion = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
     }
 
-    public DietItem(Diet diet, Food food, Double cantidad, UnidadCantidad unidad) {
+    public DietItem(Diet diet, Food food, Double quantity, QuantityUnit unit) {
         this.diet = diet;
         this.food = food;
-        this.cantidad = cantidad;
-        this.unidad = unidad;
+        this.quantity = quantity;
+        this.unit = unit;
     }
 }

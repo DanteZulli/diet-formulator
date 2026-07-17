@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${food.nombre != null ? food.nombre + ' - Diet Formulator' : 'Nuevo Alimento'}">Alimento</title>
+    <title th:text="${food.name != null ? food.name + ' - Diet Formulator' : 'Nuevo Alimento'}">Alimento</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>body { background-color: #f8f9fa; } .navbar-brand { font-weight: 600; }</style>
 </head>
@@ -30,25 +30,25 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" th:field="*{nombre}" required>
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="name" th:field="*{name}" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="tipo" class="form-label">Tipo</label>
-                            <select class="form-select" id="tipo" th:field="*{tipo}" required>
+                            <label for="type" class="form-label">Tipo</label>
+                            <select class="form-select" id="type" th:field="*{type}" required>
                                 <option value="">Seleccionar...</option>
-                                <option th:each="t : ${tiposAlimento}" th:value="${t}" th:text="${t}"></option>
+                                <option th:each="t : ${foodTypes}" th:value="${t}" th:text="${t.displayName}"></option>
                             </select>
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="porcion" class="form-label">Tamaño porción</label>
-                            <input type="number" step="0.1" class="form-control" id="porcion" th:field="*{porcion}">
+                            <label for="portion" class="form-label">Tamaño porción</label>
+                            <input type="number" step="0.1" class="form-control" id="portion" th:field="*{portion}">
                         </div>
                         <div class="col-md-4 mb-3">
-                            <label for="unidadPorcion" class="form-label">Unidad porción</label>
-                            <select class="form-select" id="unidadPorcion" th:field="*{unidadPorcion}">
+                            <label for="portionUnit" class="form-label">Unidad porción</label>
+                            <select class="form-select" id="portionUnit" th:field="*{portionUnit}">
                                 <option value="">Seleccionar...</option>
-                                <option th:each="u : ${unidadesPorcion}" th:value="${u}" th:text="${u}"></option>
+                                <option th:each="u : ${portionUnits}" th:value="${u}" th:text="${u.displayName}"></option>
                             </select>
                         </div>
                     </div>

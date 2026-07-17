@@ -5,16 +5,11 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import ar.dantezulli.diet_formulator.model.Food;
-import ar.dantezulli.diet_formulator.model.enums.TipoAlimento;
+import ar.dantezulli.diet_formulator.model.enums.FoodType;
 
-/**
- * Repository for Food entity.
- */
 public interface FoodRepository extends JpaRepository<Food, Long> {
 
-    /** Finds foods by type. */
-    List<Food> findByTipo(TipoAlimento tipo);
+    List<Food> findByType(FoodType type);
 
-    /** Finds foods by name (case-insensitive contains). */
-    List<Food> findByNombreContainingIgnoreCase(String nombre);
+    List<Food> findByNameContainingIgnoreCase(String name);
 }

@@ -5,12 +5,10 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum LifeStage {
+public enum Species {
 
-    ADULT("Adulto"),
-    PUPPY("Cachorro"),
-    PREGNANT("Preñada"),
-    LACTATING("Lactancia");
+    DOG("Perro"),
+    CAT("Gato");
 
     private final String displayName;
 }

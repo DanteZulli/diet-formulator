@@ -25,7 +25,6 @@
             <a th:href="@{/foods/new}" class="btn btn-primary">Nuevo Alimento</a>
         </div>
 
-        <!-- Search form / Formulario de búsqueda -->
         <form th:action="@{/foods}" method="get" class="mb-3">
             <div class="input-group">
                 <input type="text" class="form-control" name="search" placeholder="Buscar alimento..."
@@ -51,10 +50,10 @@
                 </thead>
                 <tbody>
                     <tr th:each="food : ${foods}">
-                        <td th:text="${food.nombre}"></td>
-                        <td th:text="${food.tipo}"></td>
-                        <td th:text="${food.porcion}"></td>
-                        <td th:text="${food.unidadPorcion}"></td>
+                        <td th:text="${food.name}"></td>
+                        <td th:text="${food.type.displayName}"></td>
+                        <td th:text="${food.portion}"></td>
+                        <td th:text="${food.portionUnit?.displayName}"></td>
                         <td>
                             <a th:href="@{/foods/{id}/edit(id=${food.id})}" class="btn btn-sm btn-outline-secondary">Editar</a>
                             <form th:action="@{/foods/{id}/delete(id=${food.id})}" method="post" class="d-inline"

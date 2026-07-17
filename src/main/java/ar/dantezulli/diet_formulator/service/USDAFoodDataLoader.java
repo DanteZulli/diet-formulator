@@ -15,20 +15,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ar.dantezulli.diet_formulator.model.Food;
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
-import ar.dantezulli.diet_formulator.model.enums.TipoAlimento;
-import ar.dantezulli.diet_formulator.model.enums.UnidadPorcion;
+import ar.dantezulli.diet_formulator.model.enums.FoodType;
+import ar.dantezulli.diet_formulator.model.enums.PortionUnit;
 import ar.dantezulli.diet_formulator.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * Loads USDA FoodData Central foundation foods from the JSON file into the database.
- *
- * Runs once on startup if the food table is empty.
- *
- * USDA nutrient IDs mapped to our Nutrient enum:
- * Source: https://fdc.nal.usda.gov/
- */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -37,89 +29,70 @@ public class USDAFoodDataLoader implements CommandLineRunner {
     private final FoodRepository foodRepository;
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    /**
-     * Mapping from USDA nutrient ID to our Nutrient enum.
-     *
-     * USDA IDs: https://fdc.nal.usda.gov/faq.html#12
-     */
     private static final Map<Integer, Nutrient> NUTRIENT_MAP = new HashMap<>();
 
     static {
-        // Energy
-        NUTRIENT_MAP.put(1008, Nutrient.ENERGIA_KCAL);
-        // Water
-        NUTRIENT_MAP.put(1051, Nutrient.AGUA_G);
-        // Ash
-        NUTRIENT_MAP.put(1007, Nutrient.CENIZA_G);
-        // Protein
-        NUTRIENT_MAP.put(1003, Nutrient.PROTEINA_G);
-        // Total lipid (fat)
-        NUTRIENT_MAP.put(1004, Nutrient.LIPIDOS_TOTALES_G);
-        // Carbohydrate, by difference
-        NUTRIENT_MAP.put(1005, Nutrient.CARBOHIDRATOS_G);
-        // Fiber, total dietary
-        NUTRIENT_MAP.put(1079, Nutrient.FIBRA_TOTAL_G);
+        NUTRIENT_MAP.put(1008, Nutrient.ENERGY_KCAL);
+        NUTRIENT_MAP.put(1051, Nutrient.WATER_G);
+        NUTRIENT_MAP.put(1007, Nutrient.ASH_G);
+        NUTRIENT_MAP.put(1003, Nutrient.PROTEIN_G);
+        NUTRIENT_MAP.put(1004, Nutrient.TOTAL_LIPIDS_G);
+        NUTRIENT_MAP.put(1005, Nutrient.CARBOHYDRATES_G);
+        NUTRIENT_MAP.put(1079, Nutrient.TOTAL_FIBER_G);
 
-        // Minerals
-        NUTRIENT_MAP.put(1087, Nutrient.CALCIO_MG);       // Calcium, Ca
-        NUTRIENT_MAP.put(1089, Nutrient.HIERRO_MG);       // Iron, Fe
-        NUTRIENT_MAP.put(1090, Nutrient.MAGNESIO_MG);     // Magnesium, Mg
-        NUTRIENT_MAP.put(1091, Nutrient.FOSFORO_MG);      // Phosphorus, P
-        NUTRIENT_MAP.put(1092, Nutrient.POTASIO_MG);      // Potassium, K
-        NUTRIENT_MAP.put(1093, Nutrient.SODIO_MG);        // Sodium, Na
-        NUTRIENT_MAP.put(1095, Nutrient.ZINC_MG);         // Zinc, Zn
-        NUTRIENT_MAP.put(1098, Nutrient.COBRE_MG);        // Copper, Cu
-        NUTRIENT_MAP.put(1101, Nutrient.MANGANESO_MG);    // Manganese, Mn
-        NUTRIENT_MAP.put(1103, Nutrient.SELENIO_UG);      // Selenium, Se
-        NUTRIENT_MAP.put(1102, Nutrient.YODO_UG);         // Iodine, I
-        NUTRIENT_MAP.put(1097, Nutrient.CLORURO_MG);      // Chloride, Cl
+        NUTRIENT_MAP.put(1087, Nutrient.CALCIUM_MG);
+        NUTRIENT_MAP.put(1089, Nutrient.IRON_MG);
+        NUTRIENT_MAP.put(1090, Nutrient.MAGNESIUM_MG);
+        NUTRIENT_MAP.put(1091, Nutrient.PHOSPHORUS_MG);
+        NUTRIENT_MAP.put(1092, Nutrient.POTASSIUM_MG);
+        NUTRIENT_MAP.put(1093, Nutrient.SODIUM_MG);
+        NUTRIENT_MAP.put(1095, Nutrient.ZINC_MG);
+        NUTRIENT_MAP.put(1098, Nutrient.COPPER_MG);
+        NUTRIENT_MAP.put(1101, Nutrient.MANGANESE_MG);
+        NUTRIENT_MAP.put(1103, Nutrient.SELENIUM_UG);
+        NUTRIENT_MAP.put(1102, Nutrient.IODINE_UG);
+        NUTRIENT_MAP.put(1097, Nutrient.CHLORIDE_MG);
 
-        // Vitamins
-        NUTRIENT_MAP.put(1162, Nutrient.VITAMINA_C_MG);   // Vitamin C
-        NUTRIENT_MAP.put(1165, Nutrient.TIAMINA_MG);      // Thiamin (B1)
-        NUTRIENT_MAP.put(1166, Nutrient.RIBOFLAVINA_MG);  // Riboflavin (B2)
-        NUTRIENT_MAP.put(1167, Nutrient.NIACINA_MG);      // Niacin (B3)
-        NUTRIENT_MAP.put(1170, Nutrient.ACIDO_PANTOTENICO_MG); // Pantothenic acid (B5)
-        NUTRIENT_MAP.put(1175, Nutrient.VITAMINA_B6_MG);  // Vitamin B-6
-        NUTRIENT_MAP.put(1177, Nutrient.FOLATO_UG);       // Folate, total
-        NUTRIENT_MAP.put(1180, Nutrient.COLINA_MG);       // Choline, total
-        NUTRIENT_MAP.put(1198, Nutrient.BETAINA_MG);      // Betaine
-        NUTRIENT_MAP.put(1178, Nutrient.VITAMINA_B12_UG); // Vitamin B-12
-        NUTRIENT_MAP.put(1106, Nutrient.RETINOL_UG);      // Vitamin A, RAE (Retinol)
-        NUTRIENT_MAP.put(1109, Nutrient.VITAMINA_E_MG);   // Vitamin E (alpha-tocopherol)
-        NUTRIENT_MAP.put(1114, Nutrient.VITAMINA_D3_UG);  // Vitamin D3 (cholecalciferol)
-        NUTRIENT_MAP.put(1185, Nutrient.VITAMINA_K_UG);   // Vitamin K (phylloquinone)
+        NUTRIENT_MAP.put(1162, Nutrient.VITAMIN_C_MG);
+        NUTRIENT_MAP.put(1165, Nutrient.THIAMINE_MG);
+        NUTRIENT_MAP.put(1166, Nutrient.RIBOFLAVIN_MG);
+        NUTRIENT_MAP.put(1167, Nutrient.NIACIN_MG);
+        NUTRIENT_MAP.put(1170, Nutrient.PANTOTHENIC_ACID_MG);
+        NUTRIENT_MAP.put(1175, Nutrient.VITAMIN_B6_MG);
+        NUTRIENT_MAP.put(1177, Nutrient.FOLATE_UG);
+        NUTRIENT_MAP.put(1180, Nutrient.CHOLINE_MG);
+        NUTRIENT_MAP.put(1198, Nutrient.BETAINE_MG);
+        NUTRIENT_MAP.put(1178, Nutrient.VITAMIN_B12_UG);
+        NUTRIENT_MAP.put(1106, Nutrient.RETINOL_UG);
+        NUTRIENT_MAP.put(1109, Nutrient.VITAMIN_E_MG);
+        NUTRIENT_MAP.put(1114, Nutrient.VITAMIN_D3_UG);
+        NUTRIENT_MAP.put(1185, Nutrient.VITAMIN_K_UG);
 
-        // Amino acids
-        NUTRIENT_MAP.put(1210, Nutrient.TRIPTOFANO_G);    // Tryptophan
-        NUTRIENT_MAP.put(1212, Nutrient.TREONINA_G);      // Threonine
-        NUTRIENT_MAP.put(1213, Nutrient.ISOLEUCINA_G);    // Isoleucine
-        NUTRIENT_MAP.put(1214, Nutrient.LEUCINA_G);       // Leucine
-        NUTRIENT_MAP.put(1215, Nutrient.LISINA_G);        // Lysine
-        NUTRIENT_MAP.put(1216, Nutrient.METIONINA_G);     // Methionine
-        NUTRIENT_MAP.put(1217, Nutrient.METIONINA_CISTINA_G); // Methionine + Cystine
-        NUTRIENT_MAP.put(1218, Nutrient.FENILALANINA_G);  // Phenylalanine
-        NUTRIENT_MAP.put(1219, Nutrient.FENILALANINA_TIROSINA_G); // Phenylalanine + Tyrosine
-        NUTRIENT_MAP.put(1220, Nutrient.VALINA_G);        // Valine
-        NUTRIENT_MAP.put(1211, Nutrient.ARGININA_G);      // Arginine
-        NUTRIENT_MAP.put(1221, Nutrient.HISTIDINA_G);     // Histidine
-        NUTRIENT_MAP.put(1235, Nutrient.TAURINA_MG);      // Taurine
+        NUTRIENT_MAP.put(1210, Nutrient.TRYPTOPHAN_G);
+        NUTRIENT_MAP.put(1212, Nutrient.THREONINE_G);
+        NUTRIENT_MAP.put(1213, Nutrient.ISOLEUCINE_G);
+        NUTRIENT_MAP.put(1214, Nutrient.LEUCINE_G);
+        NUTRIENT_MAP.put(1215, Nutrient.LYSINE_G);
+        NUTRIENT_MAP.put(1216, Nutrient.METHIONINE_G);
+        NUTRIENT_MAP.put(1217, Nutrient.METHIONINE_CYSTINE_G);
+        NUTRIENT_MAP.put(1218, Nutrient.PHENYLALANINE_G);
+        NUTRIENT_MAP.put(1219, Nutrient.PHENYLALANINE_TYROSINE_G);
+        NUTRIENT_MAP.put(1220, Nutrient.VALINE_G);
+        NUTRIENT_MAP.put(1211, Nutrient.ARGININE_G);
+        NUTRIENT_MAP.put(1221, Nutrient.HISTIDINE_G);
+        NUTRIENT_MAP.put(1235, Nutrient.TAURINE_MG);
 
-        // Fatty acids
-        NUTRIENT_MAP.put(1258, Nutrient.ACIDO_LINOLEICO_G);    // FA 18:2 n-6 c,c (Linoleic)
-        NUTRIENT_MAP.put(1280, Nutrient.ACIDO_ALINOLEICO_G);   // PUFA 18:3 n-3 (Alpha-linolenic)
-        NUTRIENT_MAP.put(1313, Nutrient.ACIDO_20_2_N6_G);      // PUFA 20:2 n-6 c,c
-        NUTRIENT_MAP.put(1406, Nutrient.ACIDO_20_3_N6_G);      // PUFA 20:3 n-6
-        NUTRIENT_MAP.put(1271, Nutrient.ACIDOARAQUIDONICO_G);  // PUFA 20:4 (Arachidonic)
-        NUTRIENT_MAP.put(1278, Nutrient.EPA_G);                // PUFA 20:5 n-3 (EPA)
-        NUTRIENT_MAP.put(1272, Nutrient.DHA_G);                // PUFA 22:6 n-3 (DHA)
-        NUTRIENT_MAP.put(1257, Nutrient.OMEGA_6_G);            // FA 18:2 undifferentiated (Omega 6)
-        NUTRIENT_MAP.put(1259, Nutrient.OMEGA_3_G);            // FA 18:3 undifferentiated (Omega 3)
+        NUTRIENT_MAP.put(1258, Nutrient.LINOLEIC_ACID_G);
+        NUTRIENT_MAP.put(1280, Nutrient.ALPHA_LINOLENIC_ACID_G);
+        NUTRIENT_MAP.put(1313, Nutrient.FATTY_ACID_20_2_N6_G);
+        NUTRIENT_MAP.put(1406, Nutrient.FATTY_ACID_20_3_N6_G);
+        NUTRIENT_MAP.put(1271, Nutrient.ARACHIDONIC_ACID_G);
+        NUTRIENT_MAP.put(1278, Nutrient.EPA_G);
+        NUTRIENT_MAP.put(1272, Nutrient.DHA_G);
+        NUTRIENT_MAP.put(1257, Nutrient.OMEGA_6_G);
+        NUTRIENT_MAP.put(1259, Nutrient.OMEGA_3_G);
     }
 
-    /**
-     * Loads foods on startup if the database is empty.
-     */
     @Override
     @Transactional
     public void run(String... args) throws Exception {
@@ -163,25 +136,22 @@ public class USDAFoodDataLoader implements CommandLineRunner {
         }
     }
 
-    /**
-     * Parses a single food entry from the USDA JSON.
-     */
     private Food parseFood(JsonNode foodNode) {
         String description = foodNode.has("description") ? foodNode.get("description").asText() : null;
         if (description == null || description.isBlank()) return null;
 
-        TipoAlimento tipo = inferFoodType(description);
+        FoodType type = inferFoodType(description);
 
         Food food = new Food();
-        food.setNombre(description);
-        food.setTipo(tipo);
-        food.setPorcion(100.0);
-        food.setUnidadPorcion(UnidadPorcion.GRAMOS);
+        food.setName(description);
+        food.setType(type);
+        food.setPortion(100.0);
+        food.setPortionUnit(PortionUnit.GRAMS);
 
         JsonNode nutrientsNode = foodNode.get("foodNutrients");
         if (nutrientsNode == null || !nutrientsNode.isArray()) return food;
 
-        Map<Nutrient, Double> nutrientes = new HashMap<>();
+        Map<Nutrient, Double> nutrients = new HashMap<>();
         for (JsonNode nutrientNode : nutrientsNode) {
             try {
                 JsonNode nutrientInfo = nutrientNode.get("nutrient");
@@ -193,7 +163,7 @@ public class USDAFoodDataLoader implements CommandLineRunner {
                 if (nutrient != null && nutrientNode.has("amount")) {
                     double amount = nutrientNode.get("amount").asDouble();
                     if (amount > 0) {
-                        nutrientes.put(nutrient, amount);
+                        nutrients.put(nutrient, amount);
                     }
                 }
             } catch (Exception e) {
@@ -201,14 +171,11 @@ public class USDAFoodDataLoader implements CommandLineRunner {
             }
         }
 
-        food.setNutrientes(nutrientes);
+        food.setNutrients(nutrients);
         return food;
     }
 
-    /**
-     * Infers food type from the description text.
-     */
-    private TipoAlimento inferFoodType(String description) {
+    private FoodType inferFoodType(String description) {
         String lower = description.toLowerCase();
 
         if (lower.contains("beef") || lower.contains("pork") || lower.contains("lamb") ||
@@ -223,14 +190,14 @@ public class USDAFoodDataLoader implements CommandLineRunner {
             lower.contains("crab") || lower.contains("shrimp") || lower.contains("lobster") ||
             lower.contains("oyster") || lower.contains("clam") || lower.contains("mussel") ||
             lower.contains("squid") || lower.contains("octopus") || lower.contains("snail")) {
-            return TipoAlimento.ANIMAL;
+            return FoodType.ANIMAL;
         }
 
         if (lower.contains("supplement") || lower.contains("vitamin") || lower.contains("mineral") ||
             lower.contains("fish oil") || lower.contains("cod liver") || lower.contains("flaxseed oil") ||
             lower.contains("calcium carbonate") || lower.contains("iron supplement") ||
             lower.contains("multivitamin") || lower.contains("mineral oil")) {
-            return TipoAlimento.SUPLEMENTO;
+            return FoodType.SUPPLEMENT;
         }
 
         if (lower.contains("rice") || lower.contains("pasta") || lower.contains("noodle") ||
@@ -238,9 +205,9 @@ public class USDAFoodDataLoader implements CommandLineRunner {
             lower.contains("tortilla") || lower.contains("cereal") || lower.contains("oat") ||
             lower.contains("corn") || lower.contains("potato") || lower.contains("sweet potato") ||
             lower.contains("yam") || lower.contains("flour") || lower.contains("starch")) {
-            return TipoAlimento.ALMIDON_COCIDO;
+            return FoodType.COOKED_STARCH;
         }
 
-        return TipoAlimento.OTRAS_PLANTAS;
+        return FoodType.OTHER_PLANTS;
     }
 }

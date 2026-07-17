@@ -17,17 +17,10 @@ import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.Table;
 
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
-import ar.dantezulli.diet_formulator.model.enums.TipoAlimento;
-import ar.dantezulli.diet_formulator.model.enums.UnidadPorcion;
+import ar.dantezulli.diet_formulator.model.enums.FoodType;
+import ar.dantezulli.diet_formulator.model.enums.PortionUnit;
 import lombok.Data;
 
-/**
- * Food entity with nutritional information.
- *
- * Nutritional data is stored per 100g of the food.
- *
- * Can be imported from USDA FoodData Central or created manually.
- */
 @Data
 @Entity
 @Table(name = "food")
@@ -38,56 +31,44 @@ public class Food {
     private Long id;
 
     @Column(nullable = false)
-    private String nombre;
+    private String name;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TipoAlimento tipo;
+    private FoodType type;
 
-    private Double porcion;
+    private Double portion;
 
     @Enumerated(EnumType.STRING)
-    private UnidadPorcion unidadPorcion;
+    private PortionUnit portionUnit;
 
-    /**
-     * Nutritional values per 100g of food.
-     *
-     * Key: Nutrient enum
-     * Value: amount in the nutrient's specified unit
-     */
     @ElementCollection
     @CollectionTable(name = "food_nutrient", joinColumns = @jakarta.persistence.JoinColumn(name = "food_id"))
     @MapKeyColumn(name = "nutrient")
     @Column(name = "nutrient_value")
     @Enumerated(EnumType.STRING)
-    private Map<Nutrient, Double> nutrientes = new HashMap<>();
+    private Map<Nutrient, Double> nutrients = new HashMap<>();
 
     private Long usdaId;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime fechaCreacion;
+    private LocalDateTime createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime fechaModificacion;
+    private LocalDateTime updatedAt;
 
     @jakarta.persistence.PrePersist
     protected void onCreate() {
-        fechaCreacion = LocalDateTime.now();
-        fechaModificacion = LocalDateTime.now();
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
     @jakarta.persistence.PreUpdate
     protected void onUpdate() {
-        fechaModificacion = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
     }
 
-    /**
-     * Gets a specific nutrient value.
-     *
-     * @param nutrient the nutrient to look for
-     * @return the value, or 0.0 if not present
-     */
-    public Double getNutriente(Nutrient nutrient) {
-        return nutrientes.getOrDefault(nutrient, 0.0);
+    public Double getNutrientValue(Nutrient nutrient) {
+        return nutrients.getOrDefault(nutrient, 0.0);
     }
 }

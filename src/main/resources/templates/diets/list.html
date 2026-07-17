@@ -41,11 +41,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="diet : ${diet}">
-                        <td><a th:href="@{/diets/{id}(id=${diet.id})}" th:text="${diet.nombre}"></a></td>
-                        <td th:text="${diet.animalProfile.nombre}"></td>
+                    <tr th:each="diet : ${diets}">
+                        <td><a th:href="@{/diets/{id}(id=${diet.id})}" th:text="${diet.name}"></a></td>
+                        <td th:text="${diet.animalProfile.name}"></td>
                         <td th:text="${#lists.size(diet.items)}"></td>
-                        <td th:text="${#temporals.format(diet.fechaCreacion, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${#temporals.format(diet.createdAt, 'dd/MM/yyyy')}"></td>
                         <td>
                             <a th:href="@{/diets/{id}(id=${diet.id})}" class="btn btn-sm btn-outline-primary">Ver</a>
                             <form th:action="@{/diets/{id}/delete(id=${diet.id})}" method="post" class="d-inline"
