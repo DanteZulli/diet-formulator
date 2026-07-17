@@ -1,7 +1,9 @@
 package ar.dantezulli.diet_formulator.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import ar.dantezulli.diet_formulator.model.AnimalProfile;
 import ar.dantezulli.diet_formulator.model.MacronutrientTargets;
@@ -16,6 +20,7 @@ import ar.dantezulli.diet_formulator.model.enums.Species;
 import ar.dantezulli.diet_formulator.model.enums.LifeStage;
 import ar.dantezulli.diet_formulator.model.enums.ActivityLevel;
 import ar.dantezulli.diet_formulator.service.AnimalProfileService;
+import ar.dantezulli.diet_formulator.service.EnergyCalculator;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -24,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class ProfileController {
 
     private final AnimalProfileService profileService;
+    private final EnergyCalculator energyCalculator;
 
     @GetMapping
     public String list(Model model) {
@@ -35,7 +41,7 @@ public class ProfileController {
     @GetMapping("/new")
     public String createForm(Model model) {
         AnimalProfile profile = new AnimalProfile();
-        profile.setMacronutrientTargets(new MacronutrientTargets(0.0, 0.0, 0.0, 0.0));
+        profile.setMacronutrientTargets(new MacronutrientTargets(40.0, 30.0, 30.0, 3.0));
         model.addAttribute("profile", profile);
         addEnumOptions(model);
         return "profiles/form";
@@ -72,6 +78,38 @@ public class ProfileController {
     public String delete(@PathVariable Long id) {
         profileService.deleteById(id);
         return "redirect:/profiles";
+    }
+
+    @GetMapping("/api/calculate-intake")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> calculateIntake(
+            @RequestParam Species species,
+            @RequestParam LifeStage lifeStage,
+            @RequestParam Double weightKg,
+            @RequestParam Integer ageMonths,
+            @RequestParam ActivityLevel activityLevel,
+            @RequestParam(defaultValue = "true") Boolean atIdealWeight,
+            @RequestParam(required = false) Double idealWeightKg,
+            @RequestParam(required = false) Integer puppyCount,
+            @RequestParam(required = false) Integer lactationWeeks) {
+
+        AnimalProfile profile = new AnimalProfile();
+        profile.setSpecies(species);
+        profile.setLifeStage(lifeStage);
+        profile.setWeightKg(weightKg);
+        profile.setAgeMonths(ageMonths);
+        profile.setActivityLevel(activityLevel);
+        profile.setAtIdealWeight(atIdealWeight);
+        profile.setIdealWeightKg(idealWeightKg);
+        profile.setPuppyCount(puppyCount);
+        profile.setLactationWeeks(lactationWeeks);
+
+        try {
+            double intake = energyCalculator.calculateRecommendedIntake(profile);
+            return ResponseEntity.ok(Map.of("recommendedIntake", intake));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
 
     private void addEnumOptions(Model model) {

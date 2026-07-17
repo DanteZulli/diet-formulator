@@ -132,7 +132,11 @@
                         </div>
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Ingesta Calórica Recomendada (kcal/día)</label>
-                            <input type="text" class="form-control" th:value="${profile.recommendedCaloricIntake}" readonly>
+                            <input type="hidden" id="recommendedCaloricIntakeHidden" th:field="*{recommendedCaloricIntake}">
+                            <input type="text" class="form-control bg-light" id="recommendedIntake"
+                                   th:value="${profile.recommendedCaloricIntake != null ? #numbers.formatDecimal(profile.recommendedCaloricIntake, 1, 2) : ''}"
+                                   readonly>
+                            <small class="text-muted">Calculada automáticamente</small>
                         </div>
                         <div class="col-md-3 mb-3 form-check">
                             <input type="checkbox" class="form-check-input" id="useRecommendedIntake" th:field="*{useRecommendedIntake}">
@@ -199,6 +203,8 @@
             var lifeStageSelect = document.getElementById('lifeStage');
             var atIdealWeightCheck = document.getElementById('atIdealWeight');
             var useRecommendedCheck = document.getElementById('useRecommendedIntake');
+            var recommendedIntakeInput = document.getElementById('recommendedIntake');
+            var recommendedIntakeHidden = document.getElementById('recommendedCaloricIntakeHidden');
 
             function toggleSections() {
                 var stage = lifeStageSelect.value;
@@ -208,11 +214,75 @@
                 document.getElementById('customIntakeSection').style.display = useRecommendedCheck.checked ? 'none' : 'block';
             }
 
+            function calculateIntake() {
+                var species = document.getElementById('species').value;
+                var lifeStage = lifeStageSelect.value;
+                var weightKg = document.getElementById('weightKg').value;
+                var ageMonths = document.getElementById('ageMonths').value;
+                var activityLevel = document.getElementById('activityLevel').value;
+
+                if (!species || !lifeStage || !weightKg || !ageMonths || !activityLevel) {
+                    recommendedIntakeInput.value = '';
+                    return;
+                }
+
+                var params = new URLSearchParams({
+                    species: species,
+                    lifeStage: lifeStage,
+                    weightKg: weightKg,
+                    ageMonths: ageMonths,
+                    activityLevel: activityLevel,
+                    atIdealWeight: atIdealWeightCheck.checked
+                });
+
+                if (!atIdealWeightCheck.checked) {
+                    var idealWeight = document.getElementById('idealWeightKg').value;
+                    if (idealWeight) params.append('idealWeightKg', idealWeight);
+                }
+
+                if (lifeStage === 'LACTATING') {
+                    var puppyCount = document.getElementById('puppyCount').value;
+                    var lactationWeeks = document.getElementById('lactationWeeks').value;
+                    if (puppyCount) params.append('puppyCount', puppyCount);
+                    if (lactationWeeks) params.append('lactationWeeks', lactationWeeks);
+                }
+
+                fetch('/profiles/api/calculate-intake?' + params.toString())
+                    .then(function(response) { return response.json(); })
+                    .then(function(data) {
+                        if (data.recommendedIntake !== undefined) {
+                            var value = data.recommendedIntake.toFixed(2);
+                            recommendedIntakeInput.value = value;
+                            recommendedIntakeHidden.value = data.recommendedIntake;
+                        } else if (data.error) {
+                            recommendedIntakeInput.value = '';
+                            recommendedIntakeHidden.value = '';
+                        }
+                    })
+                    .catch(function() {
+                        recommendedIntakeInput.value = '';
+                    });
+            }
+
+            var intakeFields = ['species', 'lifeStage', 'weightKg', 'ageMonths', 'activityLevel',
+                                'atIdealWeight', 'idealWeightKg', 'puppyCount', 'lactationWeeks'];
+            intakeFields.forEach(function(fieldId) {
+                var el = document.getElementById(fieldId);
+                if (el) {
+                    el.addEventListener('change', calculateIntake);
+                    el.addEventListener('input', calculateIntake);
+                }
+            });
+
             lifeStageSelect.addEventListener('change', toggleSections);
             atIdealWeightCheck.addEventListener('change', toggleSections);
             useRecommendedCheck.addEventListener('change', toggleSections);
 
             toggleSections();
+
+            if (recommendedIntakeInput.value === '') {
+                calculateIntake();
+            }
         });
     </script>
 </body>
