@@ -8,10 +8,12 @@
     <style>
         body { background-color: #f8f9fa; }
         .navbar-brand { font-weight: 600; }
-        .nutrient-green { color: #198754; font-weight: bold; }
-        .nutrient-red { color: #dc3545; font-weight: bold; }
-        .nutrient-black { color: #000; }
+        table.table td.nutrient-adequate { color: #198754 !important; font-weight: bold; }
+        table.table td.nutrient-excess { color: #dc3545 !important; font-weight: bold; }
+        table.table td.nutrient-below { color: #000 !important; font-weight: bold; }
         .section-header { background-color: #e9ecef; font-weight: 600; }
+        .category-header td { background-color: #dee2e6; font-weight: 700; font-size: 0.9rem; }
+        .nutrient-unit { color: #6c757d; font-size: 0.85em; }
     </style>
 </head>
 <body>
@@ -114,23 +116,67 @@
                     <thead class="table-dark">
                         <tr>
                             <th>Nutriente</th>
-                            <th class="text-end">Objetivo</th>
+                            <th class="text-end">Objetivo (NRC)</th>
                             <th class="text-end">Total</th>
-                            <th class="text-end">% MS</th>
                             <th class="text-end">% Objetivo</th>
+                            <th class="text-end">Limite Seguro</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="nutrient : ${nutrients}" th:with="s=${summary.get(nutrient)}">
-                            <td th:text="${nutrient.displayName}"></td>
-                            <td class="text-end" th:text="${s.target != null ? #numbers.formatDecimal(s.target, 1, 2) : ''}"></td>
-                            <td class="text-end" th:text="${#numbers.formatDecimal(s.total, 1, 2)}"></td>
-                            <td class="text-end" th:text="${s.total > 0 ? #numbers.formatDecimal(s.total, 1, 2) + '%' : ''}"></td>
-                            <td class="text-end"
-                                th:text="${s.pctTarget != null ? #numbers.formatDecimal(s.pctTarget, 1, 0) + '%' : ''}"
-                                th:class="${s.pctTarget != null ? (s.pctTarget < 80 ? 'text-danger' : s.pctTarget <= 120 ? 'text-success' : 'text-danger') : ''}">
-                            </td>
-                        </tr>
+                        <th:block th:each="cat : ${T(ar.dantezulli.diet_formulator.model.enums.NutrientCategory).values()}">
+                            <tr class="category-header">
+                                <td colspan="5" th:text="${cat.displayName}"></td>
+                            </tr>
+                            <tr th:each="nutrient : ${nutrients}" th:if="${nutrient.category == cat}"
+                                th:with="s=${summary.get(nutrient)}">
+                                <td th:text="${nutrient.displayName}"></td>
+                                <td class="text-end">
+                                    <span th:if="${s.target != null}" th:text="${#numbers.formatDecimal(s.target, 1, 2)}"></span>
+                                    <span th:if="${s.target == null}">-</span>
+                                    <span class="nutrient-unit" th:if="${s.target != null}" th:text="${nutrient.unit}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(s.total, 1, 2)}"></span>
+                                    <span class="nutrient-unit" th:text="${nutrient.unit}"></span>
+                                </td>
+                                <td class="text-end"
+                                    th:text="${s.pctTarget != null ? #numbers.formatDecimal(s.pctTarget, 1, 0) + '%' : '-'}"
+                                    th:class="${s.level != null ? ('text-end nutrient-' + s.level.cssClass) : 'text-end'}">
+                                </td>
+                                <td class="text-end">
+                                    <span th:if="${s.sul != null}" th:text="${#numbers.formatDecimal(s.sul, 1, 2)}"></span>
+                                    <span th:if="${s.sul == null}">-</span>
+                                    <span class="nutrient-unit" th:if="${s.sul != null}" th:text="${nutrient.unit}"></span>
+                                </td>
+                            </tr>
+                        </th:block>
+                        <th:block>
+                            <tr class="category-header">
+                                <td colspan="5">Sin categoría</td>
+                            </tr>
+                            <tr th:each="nutrient : ${nutrients}" th:if="${nutrient.category == null}"
+                                th:with="s=${summary.get(nutrient)}">
+                                <td th:text="${nutrient.displayName}"></td>
+                                <td class="text-end">
+                                    <span th:if="${s.target != null}" th:text="${#numbers.formatDecimal(s.target, 1, 2)}"></span>
+                                    <span th:if="${s.target == null}">-</span>
+                                    <span class="nutrient-unit" th:if="${s.target != null}" th:text="${nutrient.unit}"></span>
+                                </td>
+                                <td class="text-end">
+                                    <span th:text="${#numbers.formatDecimal(s.total, 1, 2)}"></span>
+                                    <span class="nutrient-unit" th:text="${nutrient.unit}"></span>
+                                </td>
+                                <td class="text-end"
+                                    th:text="${s.pctTarget != null ? #numbers.formatDecimal(s.pctTarget, 1, 0) + '%' : '-'}"
+                                    th:class="${s.level != null ? ('text-end nutrient-' + s.level.cssClass) : 'text-end'}">
+                                </td>
+                                <td class="text-end">
+                                    <span th:if="${s.sul != null}" th:text="${#numbers.formatDecimal(s.sul, 1, 2)}"></span>
+                                    <span th:if="${s.sul == null}">-</span>
+                                    <span class="nutrient-unit" th:if="${s.sul != null}" th:text="${nutrient.unit}"></span>
+                                </td>
+                            </tr>
+                        </th:block>
                     </tbody>
                 </table>
             </div>

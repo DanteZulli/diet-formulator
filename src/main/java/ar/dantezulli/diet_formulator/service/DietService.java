@@ -12,8 +12,8 @@ import ar.dantezulli.diet_formulator.model.AnimalProfile;
 import ar.dantezulli.diet_formulator.model.Diet;
 import ar.dantezulli.diet_formulator.model.DietItem;
 import ar.dantezulli.diet_formulator.model.Food;
-import ar.dantezulli.diet_formulator.model.MacronutrientTargets;
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
+import ar.dantezulli.diet_formulator.model.enums.NutrientLevel;
 import ar.dantezulli.diet_formulator.model.enums.QuantityUnit;
 import ar.dantezulli.diet_formulator.repository.DietRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class DietService {
 
     private final DietRepository repository;
-    private final EnergyCalculator energyCalculator;
+    private final NRCRequirementService nrcService;
 
     @Transactional(readOnly = true)
     public List<Diet> findAll() {
@@ -91,38 +91,27 @@ public class DietService {
     public Map<Nutrient, NutrientSummary> calculateNutrientSummary(Diet diet) {
         Map<Nutrient, Double> totals = calculateTotalNutrients(diet);
         AnimalProfile profile = diet.getAnimalProfile();
-        double recommendedIntake = energyCalculator.calculateRecommendedIntake(profile);
 
         Map<Nutrient, NutrientSummary> summary = new EnumMap<>(Nutrient.class);
 
-        MacronutrientTargets targets = profile.getMacronutrientTargets();
-
         for (Nutrient nutrient : Nutrient.values()) {
             Double total = totals.getOrDefault(nutrient, 0.0);
-            Double target = calculateTarget(nutrient, targets, recommendedIntake);
+            Double target = nrcService.calculateDailyTarget(profile, nutrient);
+            Double sul = nrcService.calculateDailySUL(profile, nutrient);
             Double pctTarget = target != null && target > 0 ? (total / target) * 100 : null;
+            NutrientLevel level = nrcService.getNutrientLevel(total, target, sul);
 
-            summary.put(nutrient, new NutrientSummary(total, target, pctTarget));
+            summary.put(nutrient, new NutrientSummary(total, target, sul, pctTarget, level));
         }
 
         return summary;
     }
 
-    private Double calculateTarget(Nutrient nutrient, MacronutrientTargets targets, double recommendedIntake) {
-        if (targets == null) return null;
-
-        return switch (nutrient) {
-            case PROTEIN_G -> recommendedIntake * (targets.getProteinPct() / 100.0) / 4.0;
-            case TOTAL_LIPIDS_G -> recommendedIntake * (targets.getFatPct() / 100.0) / 9.0;
-            case CARBOHYDRATES_G -> recommendedIntake * (targets.getCarbohydratePct() / 100.0) / 4.0;
-            case ENERGY_KCAL -> recommendedIntake;
-            default -> null;
-        };
-    }
-
     public record NutrientSummary(
         Double total,
         Double target,
-        Double pctTarget
+        Double sul,
+        Double pctTarget,
+        NutrientLevel level
     ) {}
 }
