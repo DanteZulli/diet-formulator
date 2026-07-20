@@ -3,6 +3,7 @@ package ar.dantezulli.diet_formulator.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -89,18 +90,6 @@ class DietServiceTest {
     void findByIdReturnsEmptyForNonexistentId() {
         Optional<Diet> result = dietService.findById(UUID.randomUUID());
         assertFalse(result.isPresent());
-    }
-
-    @Test
-    void findByProfileIdReturnsMatchingDiets() {
-        AnimalProfile otherProfile = profileService.save(buildValidProfile("Luna", Species.CAT));
-
-        dietService.save(buildDiet("Otto Diet", testProfile));
-        dietService.save(buildDiet("Luna Diet", otherProfile));
-
-        List<Diet> ottoDiets = dietService.findByProfileId(testProfile.getId());
-        assertEquals(1, ottoDiets.size());
-        assertEquals("Otto Diet", ottoDiets.get(0).getName());
     }
 
     @Test
@@ -248,10 +237,6 @@ class DietServiceTest {
 
         assertEquals(1, updated.getItems().size());
         assertNull(updated.getItems().get(0).getCookingMethod());
-    }
-
-    private void assertNull(Object value) {
-        org.junit.jupiter.api.Assertions.assertNull(value);
     }
 
     private Diet buildDiet(String name, AnimalProfile profile) {

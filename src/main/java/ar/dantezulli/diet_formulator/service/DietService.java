@@ -37,11 +37,6 @@ public class DietService {
         return repository.findById(id);
     }
 
-    @Transactional(readOnly = true)
-    public List<Diet> findByProfileId(UUID profileId) {
-        return repository.findByAnimalProfileId(profileId);
-    }
-
     public Diet save(Diet diet) {
         return repository.save(diet);
     }
@@ -59,7 +54,7 @@ public class DietService {
 
         DietItem item = new DietItem(diet, food, quantity, unit);
         item.setCookingMethod(cookingMethod);
-        diet.addItem(item);
+        diet.getItems().add(item);
 
         return repository.save(diet);
     }

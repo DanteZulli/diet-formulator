@@ -3,7 +3,6 @@ package ar.dantezulli.diet_formulator.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
@@ -72,94 +71,6 @@ class AnimalProfileServiceTest {
     }
 
     @Test
-    void saveRejectsBlankName() {
-        AnimalProfile profile = buildValidProfile("", Species.DOG);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
-    void saveRejectsNullName() {
-        AnimalProfile profile = buildValidProfile(null, Species.DOG);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
-    void saveRejectsZeroWeight() {
-        AnimalProfile profile = buildValidProfile("Test", Species.DOG);
-        profile.setWeightKg(0.0);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
-    void saveRejectsNegativeWeight() {
-        AnimalProfile profile = buildValidProfile("Test", Species.DOG);
-        profile.setWeightKg(-5.0);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
-    void saveRejectsNegativeAge() {
-        AnimalProfile profile = buildValidProfile("Test", Species.DOG);
-        profile.setAgeMonths(-1);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
-    void saveRejectsBodyConditionBelowRange() {
-        AnimalProfile profile = buildValidProfile("Test", Species.DOG);
-        profile.setBodyCondition(0);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
-    void saveRejectsBodyConditionAboveRange() {
-        AnimalProfile profile = buildValidProfile("Test", Species.DOG);
-        profile.setBodyCondition(6);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
-    void saveAcceptsBodyConditionAtBoundaries() {
-        AnimalProfile low = buildValidProfile("Low", Species.DOG);
-        low.setBodyCondition(1);
-        assertNotNull(service.save(low));
-
-        AnimalProfile high = buildValidProfile("High", Species.DOG);
-        high.setBodyCondition(5);
-        assertNotNull(service.save(high));
-    }
-
-    @Test
-    void saveRejectsLactatingWithoutPuppyCount() {
-        AnimalProfile profile = buildValidProfile("Mama", Species.DOG);
-        profile.setLifeStage(LifeStage.LACTATING);
-        profile.setPuppyCount(null);
-        profile.setLactationWeeks(3);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
-    void saveRejectsLactatingWithZeroPuppies() {
-        AnimalProfile profile = buildValidProfile("Mama", Species.DOG);
-        profile.setLifeStage(LifeStage.LACTATING);
-        profile.setPuppyCount(0);
-        profile.setLactationWeeks(3);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
-    void saveRejectsLactatingWithInvalidWeeks() {
-        AnimalProfile profile = buildValidProfile("Mama", Species.DOG);
-        profile.setLifeStage(LifeStage.LACTATING);
-        profile.setPuppyCount(4);
-        profile.setLactationWeeks(0);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-
-        profile.setLactationWeeks(5);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
     void saveAcceptsValidLactatingProfile() {
         AnimalProfile profile = buildValidProfile("Mama", Species.DOG);
         profile.setLifeStage(LifeStage.LACTATING);
@@ -170,22 +81,6 @@ class AnimalProfileServiceTest {
         assertNotNull(saved.getId());
         assertNotNull(saved.getRecommendedCaloricIntake());
         assertTrue(saved.getRecommendedCaloricIntake() > 0);
-    }
-
-    @Test
-    void saveRejectsPuppyWithoutAdultWeight() {
-        AnimalProfile profile = buildValidProfile("Puppy", Species.DOG);
-        profile.setLifeStage(LifeStage.PUPPY);
-        profile.setAdultWeightPuppy(null);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
-    }
-
-    @Test
-    void saveRejectsPuppyWithZeroAdultWeight() {
-        AnimalProfile profile = buildValidProfile("Puppy", Species.DOG);
-        profile.setLifeStage(LifeStage.PUPPY);
-        profile.setAdultWeightPuppy(0.0);
-        assertThrows(IllegalArgumentException.class, () -> service.save(profile));
     }
 
     @Test

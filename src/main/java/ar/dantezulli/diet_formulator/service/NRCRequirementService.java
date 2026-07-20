@@ -44,7 +44,7 @@ public class NRCRequirementService {
     /**
      * RA per kg BW^exp for a given nutrient, or null if no NRC requirement exists.
      */
-    public Double getRecommendedAllowancePerKgBW(Species species, LifeStage lifeStage, Nutrient nutrient) {
+    private Double getRecommendedAllowancePerKgBW(Species species, LifeStage lifeStage, Nutrient nutrient) {
         List<NutrientRequirement> reqs = cache.getOrDefault(species, Map.of())
                 .getOrDefault(lifeStage, List.of());
         for (NutrientRequirement req : reqs) {
@@ -58,7 +58,7 @@ public class NRCRequirementService {
     /**
      * SUL per kg BW^exp for a given nutrient, or null if no safe upper limit is defined.
      */
-    public Double getSafeUpperLimitPerKgBW(Species species, LifeStage lifeStage, Nutrient nutrient) {
+    private Double getSafeUpperLimitPerKgBW(Species species, LifeStage lifeStage, Nutrient nutrient) {
         List<NutrientRequirement> reqs = cache.getOrDefault(species, Map.of())
                 .getOrDefault(lifeStage, List.of());
         for (NutrientRequirement req : reqs) {

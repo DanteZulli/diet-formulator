@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ar.dantezulli.diet_formulator.model.dto.DietDTO;
+import ar.dantezulli.diet_formulator.model.dto.DietItemDTO;
 import ar.dantezulli.diet_formulator.model.entities.AnimalProfile;
 import ar.dantezulli.diet_formulator.model.entities.Diet;
 import ar.dantezulli.diet_formulator.model.entities.Food;
@@ -30,49 +33,53 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class DietController {
 
+    private static final String VIEW_LIST = "diets/list";
+    private static final String VIEW_FORM = "diets/form";
+    private static final String VIEW_VIEW = "diets/view";
+
     private final DietService dietService;
     private final AnimalProfileService profileService;
     private final FoodService foodService;
 
     @GetMapping
-    public String list(Model model) {
-        List<Diet> diets = dietService.findAll();
-        model.addAttribute("diets", diets);
-        return "diets/list";
+    public ModelAndView list() {
+        ModelAndView mav = new ModelAndView(VIEW_LIST);
+        mav.addObject("diets", dietService.findAll());
+        return mav;
     }
 
     @GetMapping("/new")
-    public String createForm(@RequestParam(required = false) UUID profileId, Model model) {
-        Diet diet = new Diet();
+    public ModelAndView createForm(@RequestParam(required = false) UUID profileId) {
+        DietDTO dto = new DietDTO();
         if (profileId != null) {
-            AnimalProfile profile = profileService.findById(profileId)
-                .orElseThrow(() -> new IllegalArgumentException("Perfil no encontrado"));
-            diet.setAnimalProfile(profile);
+            dto.setAnimalProfileId(profileId);
         }
-        model.addAttribute("diet", diet);
-        model.addAttribute("profiles", profileService.findAll());
-        model.addAttribute("isNew", true);
-        return "diets/form";
+        ModelAndView mav = new ModelAndView(VIEW_FORM);
+        mav.addObject("diet", dto);
+        mav.addObject("profiles", profileService.findAll());
+        mav.addObject("isNew", true);
+        return mav;
     }
 
     @PostMapping
-    public String save(@Valid Diet diet, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String save(@Valid DietDTO dietDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            model.addAttribute("diet", diet);
+            model.addAttribute("diet", dietDTO);
             model.addAttribute("profiles", profileService.findAll());
-            model.addAttribute("isNew", diet.getId() == null);
-            return "diets/form";
+            model.addAttribute("isNew", dietDTO.getId() == null);
+            return VIEW_FORM;
         }
 
-        if (diet.getAnimalProfile() == null || diet.getAnimalProfile().getId() == null) {
+        if (dietDTO.getAnimalProfileId() == null) {
             model.addAttribute("error", "Debe seleccionar un perfil");
-            model.addAttribute("diet", diet);
+            model.addAttribute("diet", dietDTO);
             model.addAttribute("profiles", profileService.findAll());
-            model.addAttribute("isNew", diet.getId() == null);
-            return "diets/form";
+            model.addAttribute("isNew", dietDTO.getId() == null);
+            return VIEW_FORM;
         }
-        AnimalProfile profile = profileService.findById(diet.getAnimalProfile().getId())
+        AnimalProfile profile = profileService.findById(dietDTO.getAnimalProfileId())
             .orElseThrow(() -> new IllegalArgumentException("Perfil no encontrado"));
+        Diet diet = dietDTO.toEntity();
         diet.setAnimalProfile(profile);
         dietService.save(diet);
         redirectAttributes.addFlashAttribute("success", "Dieta guardada correctamente");
@@ -80,29 +87,32 @@ public class DietController {
     }
 
     @GetMapping("/{id}")
-    public String view(@PathVariable UUID id, Model model) {
+    public ModelAndView view(@PathVariable UUID id) {
         Diet diet = dietService.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Dieta no encontrada: " + id));
 
         Map<Nutrient, DietService.NutrientSummary> summary = dietService.calculateNutrientSummary(diet);
         List<Food> allFoods = foodService.findAll();
 
-        model.addAttribute("diet", diet);
-        model.addAttribute("summary", summary);
-        model.addAttribute("allFoods", allFoods);
-        model.addAttribute("quantityUnits", QuantityUnit.values());
-        model.addAttribute("nutrients", Nutrient.values());
-        return "diets/view";
+        ModelAndView mav = new ModelAndView(VIEW_VIEW);
+        mav.addObject("diet", diet);
+        mav.addObject("summary", summary);
+        mav.addObject("allFoods", allFoods);
+        mav.addObject("quantityUnits", QuantityUnit.values());
+        mav.addObject("nutrients", Nutrient.values());
+        return mav;
     }
 
     @PostMapping("/{id}/items")
     public String addItem(@PathVariable UUID id,
-                          @RequestParam UUID foodId,
-                          @RequestParam Double quantity,
-                          @RequestParam QuantityUnit unit,
-                          @RequestParam(required = false) String cookingMethod,
+                          @Valid DietItemDTO itemDTO,
+                          BindingResult result,
                           RedirectAttributes redirectAttributes) {
-        dietService.addItem(id, foodId, quantity, unit, cookingMethod);
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("error", "Datos del alimento inválidos");
+            return "redirect:/diets/" + id;
+        }
+        dietService.addItem(id, itemDTO.getFoodId(), itemDTO.getQuantity(), itemDTO.getUnit(), itemDTO.getCookingMethod());
         redirectAttributes.addFlashAttribute("success", "Alimento agregado correctamente");
         return "redirect:/diets/" + id;
     }

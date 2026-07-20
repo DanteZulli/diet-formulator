@@ -70,20 +70,6 @@ class FoodServiceTest {
     }
 
     @Test
-    void findByTypeReturnsMatchingFoods() {
-        service.save(buildTypedFood("Chicken", FoodType.ANIMAL));
-        service.save(buildTypedFood("Rice", FoodType.COOKED_STARCH));
-        service.save(buildTypedFood("Beef", FoodType.ANIMAL));
-
-        List<Food> animals = service.findByType(FoodType.ANIMAL);
-        assertEquals(2, animals.size());
-        assertTrue(animals.stream().allMatch(f -> f.getType() == FoodType.ANIMAL));
-
-        List<Food> starch = service.findByType(FoodType.COOKED_STARCH);
-        assertEquals(1, starch.size());
-    }
-
-    @Test
     void searchFindsByNameCaseInsensitive() {
         service.save(buildValidFood("Chicken Breast"));
         service.save(buildValidFood("Rice"));
@@ -115,9 +101,9 @@ class FoodServiceTest {
 
         Optional<Food> found = service.findById(saved.getId());
         assertTrue(found.isPresent());
-        assertEquals(31.0, found.get().getNutrientValue(
+        assertEquals(31.0, found.get().getNutrients().get(
             ar.dantezulli.diet_formulator.model.enums.Nutrient.PROTEIN_G));
-        assertEquals(3.6, found.get().getNutrientValue(
+        assertEquals(3.6, found.get().getNutrients().get(
             ar.dantezulli.diet_formulator.model.enums.Nutrient.TOTAL_LIPIDS_G));
     }
 
@@ -146,9 +132,5 @@ class FoodServiceTest {
         return food;
     }
 
-    private Food buildTypedFood(String name, FoodType type) {
-        Food food = buildValidFood(name);
-        food.setType(type);
-        return food;
-    }
+
 }

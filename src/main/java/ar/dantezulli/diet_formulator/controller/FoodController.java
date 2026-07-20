@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
@@ -19,8 +18,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ar.dantezulli.diet_formulator.model.dto.FoodDTO;
 import ar.dantezulli.diet_formulator.model.entities.Food;
 import ar.dantezulli.diet_formulator.model.enums.FoodType;
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
@@ -34,6 +35,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/foods")
 @RequiredArgsConstructor
 public class FoodController {
+
+    private static final String VIEW_LIST = "foods/list";
+    private static final String VIEW_FORM = "foods/form";
 
     private final FoodService foodService;
 
@@ -52,69 +56,81 @@ public class FoodController {
     }
 
     @GetMapping
-    public String list(@RequestParam(required = false) String search, Model model) {
-        List<Food> foods;
+    public ModelAndView list(@RequestParam(required = false) String search) {
+        ModelAndView mav = new ModelAndView(VIEW_LIST);
         if (search != null && !search.isBlank()) {
-            foods = foodService.search(search);
-            model.addAttribute("search", search);
+            mav.addObject("foods", foodService.search(search));
+            mav.addObject("search", search);
         } else {
-            foods = foodService.findAll();
+            mav.addObject("foods", foodService.findAll());
         }
-        model.addAttribute("foods", foods);
-        return "foods/list";
+        return mav;
     }
 
     @GetMapping("/new")
-    public String createForm(Model model) {
-        model.addAttribute("food", new Food());
-        addEnumOptions(model);
-        return "foods/form";
+    public ModelAndView createForm() {
+        ModelAndView mav = new ModelAndView(VIEW_FORM);
+        mav.addObject("food", new FoodDTO());
+        addEnumOptions(mav);
+        return mav;
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable UUID id, Model model) {
+    public ModelAndView editForm(@PathVariable java.util.UUID id) {
         Food food = foodService.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Alimento no encontrado: " + id));
-        model.addAttribute("food", food);
-        addEnumOptions(model);
-        return "foods/form";
+        ModelAndView mav = new ModelAndView(VIEW_FORM);
+        mav.addObject("food", FoodDTO.from(food));
+        addEnumOptions(mav);
+        return mav;
     }
 
     @PostMapping
-    public String save(@Valid @ModelAttribute Food food, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String save(@Valid @ModelAttribute FoodDTO foodDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            model.addAttribute("food", food);
+            model.addAttribute("food", foodDTO);
             addEnumOptions(model);
-            return "foods/form";
+            return VIEW_FORM;
         }
 
         try {
-            foodService.save(food);
+            foodService.save(foodDTO.toEntity());
             redirectAttributes.addFlashAttribute("success", "Alimento guardado correctamente");
         } catch (IllegalArgumentException e) {
-            model.addAttribute("food", food);
+            model.addAttribute("food", foodDTO);
             model.addAttribute("error", e.getMessage());
             addEnumOptions(model);
-            return "foods/form";
+            return VIEW_FORM;
         }
 
         return "redirect:/foods";
     }
 
     @PostMapping("/{id}/delete")
-    public String delete(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
+    public String delete(@PathVariable java.util.UUID id, RedirectAttributes redirectAttributes) {
         foodService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Alimento eliminado correctamente");
         return "redirect:/foods";
     }
 
-    private void addEnumOptions(Model model) {
-        model.addAttribute("foodTypes", FoodType.values());
-        model.addAttribute("portionUnits", PortionUnit.values());
-        addNutrientOptions(model);
+    private void addEnumOptions(ModelAndView mav) {
+        Map<String, Object> options = buildFoodOptions();
+        mav.addAllObjects(options);
     }
 
-    private void addNutrientOptions(Model model) {
+    private void addEnumOptions(Model model) {
+        buildFoodOptions().forEach(model::addAttribute);
+    }
+
+    private Map<String, Object> buildFoodOptions() {
+        Map<String, Object> options = new LinkedHashMap<>();
+        options.put("foodTypes", FoodType.values());
+        options.put("portionUnits", PortionUnit.values());
+        options.putAll(buildNutrientOptions());
+        return options;
+    }
+
+    private Map<String, Object> buildNutrientOptions() {
         Map<NutrientCategory, List<Nutrient>> nutrientsByCategory = new LinkedHashMap<>();
 
         for (NutrientCategory category : NutrientCategory.values()) {
@@ -127,7 +143,9 @@ public class FoodController {
             .filter(n -> n.getCategory() == null)
             .collect(Collectors.toList());
 
-        model.addAttribute("nutrientsByCategory", nutrientsByCategory);
-        model.addAttribute("uncategorizedNutrients", uncategorized);
+        Map<String, Object> options = new LinkedHashMap<>();
+        options.put("nutrientsByCategory", nutrientsByCategory);
+        options.put("uncategorizedNutrients", uncategorized);
+        return options;
     }
 }

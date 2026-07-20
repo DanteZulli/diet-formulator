@@ -1,6 +1,5 @@
 package ar.dantezulli.diet_formulator.model.entities;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 import jakarta.persistence.Column;
@@ -12,18 +11,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import ar.dantezulli.diet_formulator.model.enums.QuantityUnit;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @Entity
 @Table(name = "diet_item")
-public class DietItem {
+public class DietItem extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -45,14 +45,6 @@ public class DietItem {
     private QuantityUnit unit;
 
     private String cookingMethod;
-
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-    }
 
     public DietItem(Diet diet, Food food, Double quantity, QuantityUnit unit) {
         this.diet = diet;

@@ -1,6 +1,5 @@
 package ar.dantezulli.diet_formulator.controller;
 
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -14,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ar.dantezulli.diet_formulator.model.dto.AnimalProfileDTO;
 import ar.dantezulli.diet_formulator.model.entities.AnimalProfile;
 import ar.dantezulli.diet_formulator.model.enums.Species;
 import ar.dantezulli.diet_formulator.model.enums.LifeStage;
@@ -30,49 +31,54 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ProfileController {
 
+    private static final String VIEW_LIST = "profiles/list";
+    private static final String VIEW_FORM = "profiles/form";
+
     private final AnimalProfileService profileService;
     private final EnergyCalculator energyCalculator;
 
     @GetMapping
-    public String list(Model model) {
-        List<AnimalProfile> profiles = profileService.findAll();
-        model.addAttribute("profiles", profiles);
-        return "profiles/list";
+    public ModelAndView list() {
+        ModelAndView mav = new ModelAndView(VIEW_LIST);
+        mav.addObject("profiles", profileService.findAll());
+        return mav;
     }
 
     @GetMapping("/new")
-    public String createForm(Model model) {
-        AnimalProfile profile = new AnimalProfile();
-        model.addAttribute("profile", profile);
-        addEnumOptions(model);
-        return "profiles/form";
+    public ModelAndView createForm() {
+        ModelAndView mav = new ModelAndView(VIEW_FORM);
+        mav.addObject("profile", new AnimalProfileDTO());
+        addEnumOptions(mav);
+        return mav;
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable UUID id, Model model) {
+    public ModelAndView editForm(@PathVariable UUID id) {
         AnimalProfile profile = profileService.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Perfil no encontrado: " + id));
-        model.addAttribute("profile", profile);
-        addEnumOptions(model);
-        return "profiles/form";
+        ModelAndView mav = new ModelAndView(VIEW_FORM);
+        mav.addObject("profile", AnimalProfileDTO.from(profile));
+        addEnumOptions(mav);
+        return mav;
     }
 
     @PostMapping
-    public String save(@Valid AnimalProfile profile, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+    public String save(@Valid AnimalProfileDTO profileDTO, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            model.addAttribute("profile", profile);
+            model.addAttribute("profile", profileDTO);
             addEnumOptions(model);
-            return "profiles/form";
+            return VIEW_FORM;
         }
 
         try {
+            AnimalProfile profile = profileDTO.toEntity();
             profileService.save(profile);
             redirectAttributes.addFlashAttribute("success", "Perfil guardado correctamente");
         } catch (IllegalArgumentException e) {
-            model.addAttribute("profile", profile);
+            model.addAttribute("profile", profileDTO);
             model.addAttribute("error", e.getMessage());
             addEnumOptions(model);
-            return "profiles/form";
+            return VIEW_FORM;
         }
 
         return "redirect:/profiles";
@@ -117,9 +123,19 @@ public class ProfileController {
         }
     }
 
+    private Map<String, Object> buildEnumOptions() {
+        Map<String, Object> options = new java.util.LinkedHashMap<>();
+        options.put("species", Species.values());
+        options.put("lifeStages", LifeStage.values());
+        options.put("activityLevels", ActivityLevel.values());
+        return options;
+    }
+
     private void addEnumOptions(Model model) {
-        model.addAttribute("species", Species.values());
-        model.addAttribute("lifeStages", LifeStage.values());
-        model.addAttribute("activityLevels", ActivityLevel.values());
+        buildEnumOptions().forEach(model::addAttribute);
+    }
+
+    private void addEnumOptions(ModelAndView mav) {
+        mav.addAllObjects(buildEnumOptions());
     }
 }

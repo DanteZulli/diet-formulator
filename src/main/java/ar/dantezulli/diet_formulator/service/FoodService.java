@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ar.dantezulli.diet_formulator.model.entities.Food;
-import ar.dantezulli.diet_formulator.model.enums.FoodType;
 import ar.dantezulli.diet_formulator.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -27,11 +26,6 @@ public class FoodService {
     @Transactional(readOnly = true)
     public Optional<Food> findById(UUID id) {
         return repository.findById(id);
-    }
-
-    @Transactional(readOnly = true)
-    public List<Food> findByType(FoodType type) {
-        return repository.findByType(type);
     }
 
     @Transactional(readOnly = true)

@@ -30,8 +30,8 @@ public class AnimalProfileService {
     }
 
     public AnimalProfile save(AnimalProfile profile) {
-        validateProfile(profile);
-        calculateCaloricIntake(profile);
+        double recommended = energyCalculator.calculateRecommendedIntake(profile);
+        profile.setRecommendedCaloricIntake(recommended);
         return repository.save(profile);
     }
 
@@ -40,49 +40,5 @@ public class AnimalProfileService {
             .orElseThrow(() -> new IllegalArgumentException("Perfil no encontrado: " + id));
         profile.getDiets().size();
         repository.delete(profile);
-    }
-
-    private void calculateCaloricIntake(AnimalProfile profile) {
-        double recommended = energyCalculator.calculateRecommendedIntake(profile);
-        profile.setRecommendedCaloricIntake(recommended);
-    }
-
-    private void validateProfile(AnimalProfile profile) {
-        if (profile.getName() == null || profile.getName().isBlank()) {
-            throw new IllegalArgumentException("El nombre es obligatorio");
-        }
-        if (profile.getWeightKg() == null || profile.getWeightKg() <= 0) {
-            throw new IllegalArgumentException("El peso debe ser mayor a 0");
-        }
-        if (profile.getAgeMonths() == null || profile.getAgeMonths() < 0) {
-            throw new IllegalArgumentException("La edad no puede ser negativa");
-        }
-        if (profile.getBodyCondition() == null ||
-            profile.getBodyCondition() < 1 || profile.getBodyCondition() > 5) {
-            throw new IllegalArgumentException("La condición corporal debe ser entre 1 y 5");
-        }
-
-        if (profile.getLifeStage() != null) {
-            switch (profile.getLifeStage()) {
-                case LACTATING -> {
-                    if (profile.getPuppyCount() == null || profile.getPuppyCount() <= 0) {
-                        throw new IllegalArgumentException(
-                            "En lactancia, el número de cachorros es obligatorio");
-                    }
-                    if (profile.getLactationWeeks() == null ||
-                        profile.getLactationWeeks() < 1 || profile.getLactationWeeks() > 4) {
-                        throw new IllegalArgumentException(
-                            "Las semanas de lactancia deben ser entre 1 y 4");
-                    }
-                }
-                case PUPPY -> {
-                    if (profile.getAdultWeightPuppy() == null || profile.getAdultWeightPuppy() <= 0) {
-                        throw new IllegalArgumentException(
-                            "Para cachorros, el peso de adulto es obligatorio");
-                    }
-                }
-                default -> { }
-            }
-        }
     }
 }
