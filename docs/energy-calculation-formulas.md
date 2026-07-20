@@ -237,7 +237,7 @@ Las tablas NRC definen SUL para algunos nutrientes. Si el total supera el SUL, e
 | Perro cachorro (15-3) | Lisina, Lípidos totales, Linoleico, EPA+DHA, Calcio, Vitamina A, Vitamina D3 |
 | Perro adulto (15-5) | Lípidos totales, Linoleico, EPA+DHA, Vitamina A, Vitamina D3 |
 | Perro gestación (15-8) | Lípidos totales, Linoleico, EPA+DHA, Vitamina A, Vitamina D3 |
-| Gato cachorro (15-10) | Arginina, Histidina, Isoleucina, Leucina, Lisina, Metionina, Phe, Phe+Tyr, Treonina, Triptófano, Valina, Taurina, Zinc, Araquidónico, Lípidos, Linoleico, Vitamina A, Vitamina D3 |
+| Gato cachorro (15-10) | Arginina, Histidina, Isoleucina, Leucina, Lisina, Metionina, Phe, Phe+Tyr, Treonina, Triptófano, Valina, Taurina, Lípidos, Linoleico, Vitamina A, Vitamina D3 |
 | Gato adulto (15-12) | Lípidos totales, Linoleico, Araquidónico, Zinc, Vitamina A, Vitamina D3 |
 | Gato gestación/lactancia (15-14) | Lípidos totales, Linoleico, Vitamina A, Vitamina D3 |
 

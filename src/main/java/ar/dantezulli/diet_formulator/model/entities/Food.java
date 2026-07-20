@@ -1,8 +1,9 @@
-package ar.dantezulli.diet_formulator.model;
+package ar.dantezulli.diet_formulator.model.entities;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -14,7 +15,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
 import ar.dantezulli.diet_formulator.model.enums.FoodType;
@@ -27,12 +32,14 @@ import lombok.Data;
 public class Food {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
+    @NotBlank(message = "El nombre es obligatorio")
     @Column(nullable = false)
     private String name;
 
+    @NotNull(message = "El tipo es obligatorio")
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private FoodType type;
@@ -57,13 +64,13 @@ public class Food {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @jakarta.persistence.PrePersist
+    @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
     }
 
-    @jakarta.persistence.PreUpdate
+    @PreUpdate
     protected void onUpdate() {
         updatedAt = LocalDateTime.now();
     }

@@ -2,7 +2,7 @@ package ar.dantezulli.diet_formulator.service;
 
 import org.springframework.stereotype.Service;
 
-import ar.dantezulli.diet_formulator.model.AnimalProfile;
+import ar.dantezulli.diet_formulator.model.entities.AnimalProfile;
 import ar.dantezulli.diet_formulator.model.enums.Species;
 import ar.dantezulli.diet_formulator.model.enums.LifeStage;
 import ar.dantezulli.diet_formulator.model.enums.ActivityLevel;

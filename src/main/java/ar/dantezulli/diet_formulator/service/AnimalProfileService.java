@@ -2,11 +2,12 @@ package ar.dantezulli.diet_formulator.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.dantezulli.diet_formulator.model.AnimalProfile;
+import ar.dantezulli.diet_formulator.model.entities.AnimalProfile;
 import ar.dantezulli.diet_formulator.repository.AnimalProfileRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +25,7 @@ public class AnimalProfileService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<AnimalProfile> findById(Long id) {
+    public Optional<AnimalProfile> findById(UUID id) {
         return repository.findById(id);
     }
 
@@ -34,8 +35,11 @@ public class AnimalProfileService {
         return repository.save(profile);
     }
 
-    public void deleteById(Long id) {
-        repository.deleteById(id);
+    public void deleteById(UUID id) {
+        AnimalProfile profile = repository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Perfil no encontrado: " + id));
+        profile.getDiets().size();
+        repository.delete(profile);
     }
 
     private void calculateCaloricIntake(AnimalProfile profile) {

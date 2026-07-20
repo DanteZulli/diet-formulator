@@ -1,4 +1,4 @@
-package ar.dantezulli.diet_formulator.model;
+package ar.dantezulli.diet_formulator.model.records;
 
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
 

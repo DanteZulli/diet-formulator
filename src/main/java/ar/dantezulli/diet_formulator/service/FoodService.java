@@ -2,11 +2,12 @@ package ar.dantezulli.diet_formulator.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.dantezulli.diet_formulator.model.Food;
+import ar.dantezulli.diet_formulator.model.entities.Food;
 import ar.dantezulli.diet_formulator.model.enums.FoodType;
 import ar.dantezulli.diet_formulator.repository.FoodRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class FoodService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Food> findById(Long id) {
+    public Optional<Food> findById(UUID id) {
         return repository.findById(id);
     }
 
@@ -42,7 +43,7 @@ public class FoodService {
         return repository.save(food);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(UUID id) {
         repository.deleteById(id);
     }
 }

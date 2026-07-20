@@ -2,6 +2,7 @@ package ar.dantezulli.diet_formulator.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,14 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ar.dantezulli.diet_formulator.model.AnimalProfile;
-import ar.dantezulli.diet_formulator.model.MacronutrientTargets;
+import ar.dantezulli.diet_formulator.model.entities.AnimalProfile;
 import ar.dantezulli.diet_formulator.model.enums.Species;
 import ar.dantezulli.diet_formulator.model.enums.LifeStage;
 import ar.dantezulli.diet_formulator.model.enums.ActivityLevel;
 import ar.dantezulli.diet_formulator.service.AnimalProfileService;
 import ar.dantezulli.diet_formulator.service.EnergyCalculator;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -41,14 +43,13 @@ public class ProfileController {
     @GetMapping("/new")
     public String createForm(Model model) {
         AnimalProfile profile = new AnimalProfile();
-        profile.setMacronutrientTargets(new MacronutrientTargets(40.0, 30.0, 30.0, 3.0));
         model.addAttribute("profile", profile);
         addEnumOptions(model);
         return "profiles/form";
     }
 
     @GetMapping("/{id}/edit")
-    public String editForm(@PathVariable Long id, Model model) {
+    public String editForm(@PathVariable UUID id, Model model) {
         AnimalProfile profile = profileService.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Perfil no encontrado: " + id));
         model.addAttribute("profile", profile);
@@ -57,15 +58,18 @@ public class ProfileController {
     }
 
     @PostMapping
-    public String save(AnimalProfile profile, BindingResult result, Model model) {
+    public String save(@Valid AnimalProfile profile, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
+            model.addAttribute("profile", profile);
             addEnumOptions(model);
             return "profiles/form";
         }
 
         try {
             profileService.save(profile);
+            redirectAttributes.addFlashAttribute("success", "Perfil guardado correctamente");
         } catch (IllegalArgumentException e) {
+            model.addAttribute("profile", profile);
             model.addAttribute("error", e.getMessage());
             addEnumOptions(model);
             return "profiles/form";
@@ -75,8 +79,9 @@ public class ProfileController {
     }
 
     @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable UUID id, RedirectAttributes redirectAttributes) {
         profileService.deleteById(id);
+        redirectAttributes.addFlashAttribute("success", "Perfil eliminado correctamente");
         return "redirect:/profiles";
     }
 

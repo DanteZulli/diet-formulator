@@ -15,6 +15,7 @@
                 <a class="nav-link" th:href="@{/profiles}">Perfiles</a>
                 <a class="nav-link" th:href="@{/foods}">Alimentos</a>
                 <a class="nav-link" th:href="@{/diets}">Dietas</a>
+                <a class="nav-link" th:href="@{/docs.html}">Documentación</a>
             </div>
         </div>
     </nav>
@@ -50,6 +51,44 @@
                                 <option value="">Seleccionar...</option>
                                 <option th:each="u : ${portionUnits}" th:value="${u}" th:text="${u.displayName}"></option>
                             </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4" th:each="entry : ${nutrientsByCategory}">
+                <div class="card-header">
+                    <h5 th:text="${entry.key.displayName}">Categoría</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-2" th:each="nutrient : ${entry.value}">
+                            <label class="form-label" th:text="${nutrient.displayName}">Nutriente</label>
+                            <div class="input-group">
+                                <input type="number" step="0.01" class="form-control"
+                                       th:name="'nutrients[' + ${nutrient.name} + ']'"
+                                       th:value="${food.nutrients[nutrient.name]}">
+                                <span class="input-group-text" th:text="${nutrient.unit}">g</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4" th:if="${!uncategorizedNutrients.isEmpty()}">
+                <div class="card-header">
+                    <h5>Otros</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-2" th:each="nutrient : ${uncategorizedNutrients}">
+                            <label class="form-label" th:text="${nutrient.displayName}">Nutriente</label>
+                            <div class="input-group">
+                                <input type="number" step="0.01" class="form-control"
+                                       th:name="'nutrients[' + ${nutrient.name} + ']'"
+                                       th:value="${food.nutrients[nutrient.name]}">
+                                <span class="input-group-text" th:text="${nutrient.unit}">g</span>
+                            </div>
                         </div>
                     </div>
                 </div>

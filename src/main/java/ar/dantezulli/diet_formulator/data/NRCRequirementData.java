@@ -2,7 +2,7 @@ package ar.dantezulli.diet_formulator.data;
 
 import java.util.List;
 
-import ar.dantezulli.diet_formulator.model.NutrientRequirement;
+import ar.dantezulli.diet_formulator.model.records.NutrientRequirement;
 import ar.dantezulli.diet_formulator.model.enums.LifeStage;
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
 import ar.dantezulli.diet_formulator.model.enums.Species;

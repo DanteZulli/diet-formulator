@@ -7,8 +7,8 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import ar.dantezulli.diet_formulator.data.NRCRequirementData;
-import ar.dantezulli.diet_formulator.model.AnimalProfile;
-import ar.dantezulli.diet_formulator.model.NutrientRequirement;
+import ar.dantezulli.diet_formulator.model.entities.AnimalProfile;
+import ar.dantezulli.diet_formulator.model.records.NutrientRequirement;
 import ar.dantezulli.diet_formulator.model.enums.LifeStage;
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
 import ar.dantezulli.diet_formulator.model.enums.NutrientLevel;

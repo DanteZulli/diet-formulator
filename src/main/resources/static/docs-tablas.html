@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tablas de Referencia NRC (2006) — Diet Formulator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar-brand { font-weight: 600; }
+        .table th { white-space: nowrap; }
+        .section-anchor { scroll-margin-top: 80px; }
+        .nav-tabs .nav-link { font-size: 0.85rem; }
+        .category-header td {
+            background-color: #dee2e6;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/profiles">Diet Formulator</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/profiles">Perfiles</a>
+                <a class="nav-link" href="/foods">Alimentos</a>
+                <a class="nav-link" href="/diets">Dietas</a>
+                <a class="nav-link" href="/docs.html">Documentación</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <h1>Tablas de Referencia NRC (2006)</h1>
+        <p class="lead">
+            Valores de <strong>Recomendación (RA)</strong> y <strong>Límite Seguro (SUL)</strong>
+            por kg de peso metabólico. Todos los valores provienen de
+            <em>NRC (2006) Nutrient Requirements of Dogs and Cats</em>.
+        </p>
+
+        <p class="text-muted">
+            <a href="/docs.html">&larr; Volver a la Referencia Técnica</a>
+        </p>
+
+        <hr>
+
+        <!-- Navegación por tabs -->
+        <ul class="nav nav-tabs mb-4" id="tableTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" data-bs-toggle="tab"
+                        data-bs-target="#tab-dog-puppy" type="button" role="tab">
+                    Perro Cachorro (15-3)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab"
+                        data-bs-target="#tab-dog-adult" type="button" role="tab">
+                    Perro Adulto (15-5)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab"
+                        data-bs-target="#tab-dog-gest" type="button" role="tab">
+                    Perro Gest/Lact (15-8)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab"
+                        data-bs-target="#tab-cat-kitten" type="button" role="tab">
+                    Gato Cachorro (15-10)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab"
+                        data-bs-target="#tab-cat-adult" type="button" role="tab">
+                    Gato Adulto (15-12)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab"
+                        data-bs-target="#tab-cat-gest" type="button" role="tab">
+                    Gato Gestación (15-14)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" data-bs-toggle="tab"
+                        data-bs-target="#tab-cat-lact" type="button" role="tab">
+                    Gato Lactancia (15-14)
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="tableTabContent">
+
+            <!-- ============================================================ -->
+            <!-- TAB 1: PERRO CACHORRO — Table 15-3                          -->
+            <!-- ============================================================ -->
+            <div class="tab-pane fade show active" id="tab-dog-puppy" role="tabpanel">
+                <h3>Tabla 15-3: Cachorros en Crecimiento (14+ semanas)</h3>
+                <p class="text-muted">
+                    NRC (2006) Tabla 15-3 &mdash;
+                    RA y SUL por kg BW<sup>0.75</sup>
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nutriente</th>
+                                <th>Unidad</th>
+                                <th class="text-end">RA</th>
+                                <th class="text-end">SUL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="category-header"><td colspan="4">Proteínas y Aminoácidos</td></tr>
+                            <tr><td>Proteína</td><td>g</td><td class="text-end">12.2</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Arginina</td><td>g</td><td class="text-end">0.46</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Histidina</td><td>g</td><td class="text-end">0.17</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Isoleucina</td><td>g</td><td class="text-end">0.35</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina</td><td>g</td><td class="text-end">0.18</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina + Cistina</td><td>g</td><td class="text-end">0.37</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Leucina</td><td>g</td><td class="text-end">0.57</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Lisina</td><td>g</td><td class="text-end">0.49</td><td class="text-end">1.39</td></tr>
+                            <tr><td>Fenilalanina</td><td>g</td><td class="text-end">0.35</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fenilalanina + Tirosina</td><td>g</td><td class="text-end">0.70</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Treonina</td><td>g</td><td class="text-end">0.44</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Triptófano</td><td>g</td><td class="text-end">0.13</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Valina</td><td>g</td><td class="text-end">0.39</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Grasas y Ácidos Grasos</td></tr>
+                            <tr><td>Lípidos totales</td><td>g</td><td class="text-end">5.9</td><td class="text-end">23.0</td></tr>
+                            <tr><td>Ácido linoleico</td><td>g</td><td class="text-end">0.8</td><td class="text-end">4.5</td></tr>
+                            <tr><td>Ácido &alpha;-linolénico</td><td>g</td><td class="text-end">0.05</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Ácido araquidónico</td><td>g</td><td class="text-end">0.022</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>EPA + DHA Total</td><td>g</td><td class="text-end">0.036</td><td class="text-end">0.77</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Minerales</td></tr>
+                            <tr><td>Calcio</td><td>mg</td><td class="text-end">680</td><td class="text-end">1,250</td></tr>
+                            <tr><td>Fósforo</td><td>mg</td><td class="text-end">680</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Magnesio</td><td>mg</td><td class="text-end">27.4</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Sodio</td><td>mg</td><td class="text-end">100</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Potasio</td><td>mg</td><td class="text-end">300</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cloruro</td><td>mg</td><td class="text-end">200</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Hierro</td><td>mg</td><td class="text-end">6.1</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cobre</td><td>mg</td><td class="text-end">0.76</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Zinc</td><td>mg</td><td class="text-end">6.84</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Manganeso</td><td>mg</td><td class="text-end">0.38</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Selenio</td><td>&micro;g</td><td class="text-end">25.1</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Yodo</td><td>&micro;g</td><td class="text-end">61</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Vitaminas</td></tr>
+                            <tr><td>Vitamina A (retinol)</td><td>&micro;g</td><td class="text-end">105</td><td class="text-end">1,044</td></tr>
+                            <tr><td>Vitamina D3</td><td>&micro;g</td><td class="text-end">0.96</td><td class="text-end">5.6</td></tr>
+                            <tr><td>Vitamina E</td><td>mg</td><td class="text-end">2.1</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina K</td><td>&micro;g</td><td class="text-end">110</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Tiamina</td><td>mg</td><td class="text-end">0.096</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Riboflavina</td><td>mg</td><td class="text-end">0.37</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B6</td><td>mg</td><td class="text-end">0.10</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Niacina</td><td>mg</td><td class="text-end">1.18</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>&Aacute;cido pantoténico</td><td>mg</td><td class="text-end">1.04</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B12</td><td>&micro;g</td><td class="text-end">2.4</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Folato</td><td>&micro;g</td><td class="text-end">18.8</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Colina</td><td>mg</td><td class="text-end">118</td><td class="text-end">&mdash;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- TAB 2: PERRO ADULTO — Table 15-5                            -->
+            <!-- ============================================================ -->
+            <div class="tab-pane fade" id="tab-dog-adult" role="tabpanel">
+                <h3>Tabla 15-5: Perros Adultos en Mantenimiento</h3>
+                <p class="text-muted">
+                    NRC (2006) Tabla 15-5 &mdash;
+                    RA y SUL por kg BW<sup>0.75</sup>
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nutriente</th>
+                                <th>Unidad</th>
+                                <th class="text-end">RA</th>
+                                <th class="text-end">SUL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="category-header"><td colspan="4">Proteínas y Aminoácidos</td></tr>
+                            <tr><td>Proteína</td><td>g</td><td class="text-end">3.28</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Arginina</td><td>g</td><td class="text-end">0.11</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Histidina</td><td>g</td><td class="text-end">0.062</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Isoleucina</td><td>g</td><td class="text-end">0.12</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina</td><td>g</td><td class="text-end">0.11</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina + Cistina</td><td>g</td><td class="text-end">0.21</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Leucina</td><td>g</td><td class="text-end">0.22</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Lisina</td><td>g</td><td class="text-end">0.11</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fenilalanina</td><td>g</td><td class="text-end">0.15</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fenilalanina + Tirosina</td><td>g</td><td class="text-end">0.24</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Treonina</td><td>g</td><td class="text-end">0.14</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Triptófano</td><td>g</td><td class="text-end">0.046</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Valina</td><td>g</td><td class="text-end">0.16</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Grasas y Ácidos Grasos</td></tr>
+                            <tr><td>Lípidos totales</td><td>g</td><td class="text-end">1.8</td><td class="text-end">10.8</td></tr>
+                            <tr><td>Ácido linoleico</td><td>g</td><td class="text-end">0.36</td><td class="text-end">2.1</td></tr>
+                            <tr><td>Ácido &alpha;-linolénico</td><td>g</td><td class="text-end">0.014</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>EPA + DHA Total</td><td>g</td><td class="text-end">0.03</td><td class="text-end">0.37</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Minerales</td></tr>
+                            <tr><td>Calcio</td><td>mg</td><td class="text-end">130</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fósforo</td><td>mg</td><td class="text-end">100</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Magnesio</td><td>mg</td><td class="text-end">19.7</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Sodio</td><td>mg</td><td class="text-end">26.2</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Potasio</td><td>mg</td><td class="text-end">140</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cloruro</td><td>mg</td><td class="text-end">40</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Hierro</td><td>mg</td><td class="text-end">1.0</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cobre</td><td>mg</td><td class="text-end">0.2</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Zinc</td><td>mg</td><td class="text-end">2.0</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Manganeso</td><td>mg</td><td class="text-end">0.16</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Selenio</td><td>&micro;g</td><td class="text-end">11.8</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Yodo</td><td>&micro;g</td><td class="text-end">29.6</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Vitaminas</td></tr>
+                            <tr><td>Vitamina A (retinol)</td><td>&micro;g</td><td class="text-end">50</td><td class="text-end">2,099</td></tr>
+                            <tr><td>Vitamina D3</td><td>&micro;g</td><td class="text-end">0.45</td><td class="text-end">2.6</td></tr>
+                            <tr><td>Vitamina E</td><td>mg</td><td class="text-end">1.0</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina K</td><td>&micro;g</td><td class="text-end">54</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Tiamina</td><td>mg</td><td class="text-end">0.074</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Riboflavina</td><td>mg</td><td class="text-end">0.171</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B6</td><td>mg</td><td class="text-end">0.049</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Niacina</td><td>mg</td><td class="text-end">0.57</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>&Aacute;cido pantoténico</td><td>mg</td><td class="text-end">0.49</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B12</td><td>&micro;g</td><td class="text-end">1.15</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Folato</td><td>&micro;g</td><td class="text-end">8.9</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Colina</td><td>mg</td><td class="text-end">56</td><td class="text-end">&mdash;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- TAB 3: PERRO GESTACIÓN/LACTANCIA — Table 15-8               -->
+            <!-- ============================================================ -->
+            <div class="tab-pane fade" id="tab-dog-gest" role="tabpanel">
+                <h3>Tabla 15-8: Perras en Gestación Tardía y Lactancia Pico</h3>
+                <p class="text-muted">
+                    NRC (2006) Tabla 15-8 &mdash;
+                    RA y SUL por kg BW<sup>0.75</sup>
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nutriente</th>
+                                <th>Unidad</th>
+                                <th class="text-end">RA</th>
+                                <th class="text-end">SUL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="category-header"><td colspan="4">Proteínas y Aminoácidos</td></tr>
+                            <tr><td>Proteína</td><td>g</td><td class="text-end">24.6</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Arginina</td><td>g</td><td class="text-end">1.23</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Histidina</td><td>g</td><td class="text-end">0.54</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Isoleucina</td><td>g</td><td class="text-end">0.87</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina</td><td>g</td><td class="text-end">0.38</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina + Cistina</td><td>g</td><td class="text-end">0.76</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Leucina</td><td>g</td><td class="text-end">2.46</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Lisina</td><td>g</td><td class="text-end">1.11</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fenilalanina</td><td>g</td><td class="text-end">1.02</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fenilalanina + Tirosina</td><td>g</td><td class="text-end">1.51</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Treonina</td><td>g</td><td class="text-end">1.28</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Triptófano</td><td>g</td><td class="text-end">0.15</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Valina</td><td>g</td><td class="text-end">1.60</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Grasas y Ácidos Grasos</td></tr>
+                            <tr><td>Lípidos totales</td><td>g</td><td class="text-end">10.5</td><td class="text-end">40.6</td></tr>
+                            <tr><td>Ácido linoleico</td><td>g</td><td class="text-end">1.6</td><td class="text-end">8.0</td></tr>
+                            <tr><td>Ácido &alpha;-linolénico</td><td>g</td><td class="text-end">0.10</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>EPA + DHA Total</td><td>g</td><td class="text-end">0.06</td><td class="text-end">1.4</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Minerales</td></tr>
+                            <tr><td>Calcio</td><td>mg</td><td class="text-end">820</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fósforo</td><td>mg</td><td class="text-end">580</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Magnesio</td><td>mg</td><td class="text-end">69</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Sodio</td><td>mg</td><td class="text-end">238</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Potasio</td><td>mg</td><td class="text-end">430</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cloruro</td><td>mg</td><td class="text-end">358</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Hierro</td><td>mg</td><td class="text-end">8.67</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cobre</td><td>mg</td><td class="text-end">1.52</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Zinc</td><td>mg</td><td class="text-end">11.7</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Manganeso</td><td>mg</td><td class="text-end">0.87</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Selenio</td><td>&micro;g</td><td class="text-end">43</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Yodo</td><td>&micro;g</td><td class="text-end">108</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Vitaminas</td></tr>
+                            <tr><td>Vitamina A (retinol)</td><td>&micro;g</td><td class="text-end">186</td><td class="text-end">1,846</td></tr>
+                            <tr><td>Vitamina D3</td><td>&micro;g</td><td class="text-end">1.70</td><td class="text-end">9.8</td></tr>
+                            <tr><td>Vitamina E</td><td>mg</td><td class="text-end">3.7</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina K</td><td>&micro;g</td><td class="text-end">200</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Tiamina</td><td>mg</td><td class="text-end">0.28</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Riboflavina</td><td>mg</td><td class="text-end">0.64</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B6</td><td>mg</td><td class="text-end">0.185</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Niacina</td><td>mg</td><td class="text-end">2.09</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>&Aacute;cido pantoténico</td><td>mg</td><td class="text-end">1.84</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B12</td><td>&micro;g</td><td class="text-end">4.3</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Folato</td><td>&micro;g</td><td class="text-end">33.2</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Colina</td><td>mg</td><td class="text-end">209</td><td class="text-end">&mdash;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- TAB 4: GATO CACHORRO — Table 15-10                          -->
+            <!-- ============================================================ -->
+            <div class="tab-pane fade" id="tab-cat-kitten" role="tabpanel">
+                <h3>Tabla 15-10: Gatitos en Crecimiento</h3>
+                <p class="text-muted">
+                    NRC (2006) Tabla 15-10 &mdash;
+                    RA y SUL por kg BW<sup>0.67</sup>
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nutriente</th>
+                                <th>Unidad</th>
+                                <th class="text-end">RA</th>
+                                <th class="text-end">SUL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="category-header"><td colspan="4">Proteínas y Aminoácidos</td></tr>
+                            <tr><td>Proteína</td><td>g</td><td class="text-end">11.8</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Arginina</td><td>g</td><td class="text-end">0.50</td><td class="text-end">1.83</td></tr>
+                            <tr><td>Histidina</td><td>g</td><td class="text-end">0.17</td><td class="text-end">&gt;1.15</td></tr>
+                            <tr><td>Isoleucina</td><td>g</td><td class="text-end">0.29</td><td class="text-end">&gt;4.54</td></tr>
+                            <tr><td>Metionina</td><td>g</td><td class="text-end">0.23</td><td class="text-end">0.68</td></tr>
+                            <tr><td>Metionina + Cistina</td><td>g</td><td class="text-end">0.46</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Leucina</td><td>g</td><td class="text-end">0.67</td><td class="text-end">&gt;4.54</td></tr>
+                            <tr><td>Lisina</td><td>g</td><td class="text-end">0.44</td><td class="text-end">&gt;3.03</td></tr>
+                            <tr><td>Fenilalanina</td><td>g</td><td class="text-end">0.27</td><td class="text-end">&gt;1.51</td></tr>
+                            <tr><td>Fenilalanina + Tirosina</td><td>g</td><td class="text-end">1.00</td><td class="text-end">3.55</td></tr>
+                            <tr><td>Treonina</td><td>g</td><td class="text-end">0.33</td><td class="text-end">&gt;2.66</td></tr>
+                            <tr><td>Triptófano</td><td>g</td><td class="text-end">0.084</td><td class="text-end">0.89</td></tr>
+                            <tr><td>Valina</td><td>g</td><td class="text-end">0.33</td><td class="text-end">&gt;4.54</td></tr>
+                            <tr><td>Taurina</td><td>mg</td><td class="text-end">21</td><td class="text-end">&gt;460</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Grasas y Ácidos Grasos</td></tr>
+                            <tr><td>Lípidos totales</td><td>g</td><td class="text-end">4.7</td><td class="text-end">&gt;17.2</td></tr>
+                            <tr><td>Ácido linoleico</td><td>g</td><td class="text-end">0.29</td><td class="text-end">2.9</td></tr>
+                            <tr><td>Ácido &alpha;-linolénico</td><td>g</td><td class="text-end">0.010</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Ácido araquidónico</td><td>g</td><td class="text-end">0.001</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>EPA + DHA Total</td><td>g</td><td class="text-end">0.005</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Minerales</td></tr>
+                            <tr><td>Calcio</td><td>mg</td><td class="text-end">410</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fósforo</td><td>mg</td><td class="text-end">372</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Magnesio</td><td>mg</td><td class="text-end">20</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Sodio</td><td>mg</td><td class="text-end">74</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Potasio</td><td>mg</td><td class="text-end">209</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cloruro</td><td>mg</td><td class="text-end">46.5</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Hierro</td><td>mg</td><td class="text-end">4.2</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cobre</td><td>mg</td><td class="text-end">0.44</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Zinc</td><td>mg</td><td class="text-end">3.9</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Manganeso</td><td>mg</td><td class="text-end">0.25</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Selenio</td><td>&micro;g</td><td class="text-end">15.8</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Yodo</td><td>&micro;g</td><td class="text-end">93</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Vitaminas</td></tr>
+                            <tr><td>Vitamina A (retinol)</td><td>&micro;g</td><td class="text-end">52</td><td class="text-end">4,180</td></tr>
+                            <tr><td>Vitamina D3</td><td>&micro;g</td><td class="text-end">0.29</td><td class="text-end">39</td></tr>
+                            <tr><td>Vitamina E</td><td>mg</td><td class="text-end">2.0</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina K</td><td>&micro;g</td><td class="text-end">50</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Tiamina</td><td>mg</td><td class="text-end">0.29</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Riboflavina</td><td>mg</td><td class="text-end">0.21</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B6</td><td>mg</td><td class="text-end">0.13</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Niacina</td><td>mg</td><td class="text-end">2.1</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>&Aacute;cido pantoténico</td><td>mg</td><td class="text-end">0.30</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B12</td><td>&micro;g</td><td class="text-end">1.18</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Folato</td><td>&micro;g</td><td class="text-end">39</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Colina</td><td>mg</td><td class="text-end">133</td><td class="text-end">&mdash;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- TAB 5: GATO ADULTO — Table 15-12                            -->
+            <!-- ============================================================ -->
+            <div class="tab-pane fade" id="tab-cat-adult" role="tabpanel">
+                <h3>Tabla 15-12: Gatos Adultos en Mantenimiento</h3>
+                <p class="text-muted">
+                    NRC (2006) Tabla 15-12 &mdash;
+                    RA y SUL por kg BW<sup>0.67</sup>
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nutriente</th>
+                                <th>Unidad</th>
+                                <th class="text-end">RA</th>
+                                <th class="text-end">SUL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="category-header"><td colspan="4">Proteínas y Aminoácidos</td></tr>
+                            <tr><td>Proteína</td><td>g</td><td class="text-end">4.96</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Arginina</td><td>g</td><td class="text-end">0.19</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Histidina</td><td>g</td><td class="text-end">0.064</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Isoleucina</td><td>g</td><td class="text-end">0.11</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina</td><td>g</td><td class="text-end">0.042</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina + Cistina</td><td>g</td><td class="text-end">0.084</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Leucina</td><td>g</td><td class="text-end">0.25</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Lisina</td><td>g</td><td class="text-end">0.084</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fenilalanina</td><td>g</td><td class="text-end">0.099</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fenilalanina + Tirosina</td><td>g</td><td class="text-end">0.38</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Treonina</td><td>g</td><td class="text-end">0.13</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Triptófano</td><td>g</td><td class="text-end">0.032</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Valina</td><td>g</td><td class="text-end">0.13</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Taurina</td><td>mg</td><td class="text-end">9.9</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Grasas y Ácidos Grasos</td></tr>
+                            <tr><td>Lípidos totales</td><td>g</td><td class="text-end">2.2</td><td class="text-end">8.2</td></tr>
+                            <tr><td>Ácido linoleico</td><td>g</td><td class="text-end">0.14</td><td class="text-end">1.4</td></tr>
+                            <tr><td>Ácido araquidónico</td><td>g</td><td class="text-end">0.0015</td><td class="text-end">0.049</td></tr>
+                            <tr><td>EPA + DHA Total</td><td>g</td><td class="text-end">0.0025</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Minerales</td></tr>
+                            <tr><td>Calcio</td><td>mg</td><td class="text-end">71</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fósforo</td><td>mg</td><td class="text-end">63</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Magnesio</td><td>mg</td><td class="text-end">9.5</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Sodio</td><td>mg</td><td class="text-end">16.7</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Potasio</td><td>mg</td><td class="text-end">130</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cloruro</td><td>mg</td><td class="text-end">23.7</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Hierro</td><td>mg</td><td class="text-end">1.98</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cobre</td><td>mg</td><td class="text-end">0.119</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Zinc</td><td>mg</td><td class="text-end">1.9</td><td class="text-end">600</td></tr>
+                            <tr><td>Manganeso</td><td>mg</td><td class="text-end">0.119</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Selenio</td><td>&micro;g</td><td class="text-end">6.95</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Yodo</td><td>&micro;g</td><td class="text-end">35</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Vitaminas</td></tr>
+                            <tr><td>Vitamina A (retinol)</td><td>&micro;g</td><td class="text-end">24.7</td><td class="text-end">2,469</td></tr>
+                            <tr><td>Vitamina D3</td><td>&micro;g</td><td class="text-end">0.17</td><td class="text-end">19</td></tr>
+                            <tr><td>Vitamina E</td><td>mg</td><td class="text-end">0.94</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina K</td><td>&micro;g</td><td class="text-end">25</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Tiamina</td><td>mg</td><td class="text-end">0.14</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Riboflavina</td><td>mg</td><td class="text-end">0.099</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B6</td><td>mg</td><td class="text-end">0.06</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Niacina</td><td>mg</td><td class="text-end">0.99</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>&Aacute;cido pantoténico</td><td>mg</td><td class="text-end">0.14</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B12</td><td>&micro;g</td><td class="text-end">0.56</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Folato</td><td>&micro;g</td><td class="text-end">19</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Colina</td><td>mg</td><td class="text-end">63</td><td class="text-end">&mdash;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- TAB 6: GATO GESTACIÓN — Table 15-14 (gestating)             -->
+            <!-- ============================================================ -->
+            <div class="tab-pane fade" id="tab-cat-gest" role="tabpanel">
+                <h3>Tabla 15-14: Gatas en Gestación Tardía</h3>
+                <p class="text-muted">
+                    NRC (2006) Tabla 15-14, sección "Gestating" (proteínas/aminoácidos)
+                    + grasas/minerales/vitaminas compartidos con lactancia.
+                    RA y SUL por kg BW<sup>0.67</sup>.
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nutriente</th>
+                                <th>Unidad</th>
+                                <th class="text-end">RA</th>
+                                <th class="text-end">SUL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="category-header"><td colspan="4">Proteínas y Aminoácidos</td></tr>
+                            <tr><td>Proteína</td><td>g</td><td class="text-end">7.40</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Arginina</td><td>g</td><td class="text-end">0.52</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Histidina</td><td>g</td><td class="text-end">0.15</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Isoleucina</td><td>g</td><td class="text-end">0.27</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina</td><td>g</td><td class="text-end">0.170</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina + Cistina</td><td>g</td><td class="text-end">0.31</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Leucina</td><td>g</td><td class="text-end">0.63</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Lisina</td><td>g</td><td class="text-end">0.38</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fenilalanina + Tirosina</td><td>g</td><td class="text-end">0.66</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Treonina</td><td>g</td><td class="text-end">0.31</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Triptófano</td><td>g</td><td class="text-end">0.066</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Valina</td><td>g</td><td class="text-end">0.35</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Taurina</td><td>mg</td><td class="text-end">18</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Grasas y Ácidos Grasos</td></tr>
+                            <tr><td>Lípidos totales</td><td>g</td><td class="text-end">4.8</td><td class="text-end">17.6</td></tr>
+                            <tr><td>Ácido linoleico</td><td>g</td><td class="text-end">0.3</td><td class="text-end">2.93</td></tr>
+                            <tr><td>Ácido &alpha;-linolénico</td><td>g</td><td class="text-end">0.011</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Ácido araquidónico</td><td>g</td><td class="text-end">0.011</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>EPA + DHA Total</td><td>g</td><td class="text-end">0.0044</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Minerales</td></tr>
+                            <tr><td>Calcio</td><td>mg</td><td class="text-end">565</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fósforo</td><td>mg</td><td class="text-end">411</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Magnesio</td><td>mg</td><td class="text-end">32</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Sodio</td><td>mg</td><td class="text-end">142</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Potasio</td><td>mg</td><td class="text-end">277</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cloruro</td><td>mg</td><td class="text-end">213</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Hierro</td><td>mg</td><td class="text-end">4.3</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cobre</td><td>mg</td><td class="text-end">0.47</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Zinc</td><td>mg</td><td class="text-end">3.2</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Manganeso</td><td>mg</td><td class="text-end">0.38</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Selenio</td><td>&micro;g</td><td class="text-end">16</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Yodo</td><td>&micro;g</td><td class="text-end">96</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Vitaminas</td></tr>
+                            <tr><td>Vitamina A (retinol)</td><td>&micro;g</td><td class="text-end">107</td><td class="text-end">5,333</td></tr>
+                            <tr><td>Vitamina D3</td><td>&micro;g</td><td class="text-end">0.37</td><td class="text-end">40</td></tr>
+                            <tr><td>Vitamina E</td><td>mg</td><td class="text-end">1.67</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina K</td><td>&micro;g</td><td class="text-end">180</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Tiamina</td><td>mg</td><td class="text-end">0.32</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Riboflavina</td><td>mg</td><td class="text-end">0.21</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B6</td><td>mg</td><td class="text-end">0.11</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Niacina</td><td>mg</td><td class="text-end">2.10</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>&Aacute;cido pantoténico</td><td>mg</td><td class="text-end">0.31</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B12</td><td>&micro;g</td><td class="text-end">1.0</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Folato</td><td>&micro;g</td><td class="text-end">33</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Colina</td><td>mg</td><td class="text-end">113</td><td class="text-end">&mdash;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================================ -->
+            <!-- TAB 7: GATO LACTANCIA — Table 15-14 (lactating)             -->
+            <!-- ============================================================ -->
+            <div class="tab-pane fade" id="tab-cat-lact" role="tabpanel">
+                <h3>Tabla 15-14: Gatas en Lactancia Pico</h3>
+                <p class="text-muted">
+                    NRC (2006) Tabla 15-14, sección "Lactating" (proteínas/aminoácidos)
+                    + grasas/minerales/vitaminas compartidos con gestación.
+                    RA y SUL por kg BW<sup>0.67</sup>.
+                </p>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-sm table-striped">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Nutriente</th>
+                                <th>Unidad</th>
+                                <th class="text-end">RA</th>
+                                <th class="text-end">SUL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="category-header"><td colspan="4">Proteínas y Aminoácidos</td></tr>
+                            <tr><td>Proteína</td><td>g</td><td class="text-end">16.10</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Arginina</td><td>g</td><td class="text-end">0.81</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Histidina</td><td>g</td><td class="text-end">0.39</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Isoleucina</td><td>g</td><td class="text-end">0.64</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina</td><td>g</td><td class="text-end">0.32</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Metionina + Cistina</td><td>g</td><td class="text-end">0.56</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Leucina</td><td>g</td><td class="text-end">1.07</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Lisina</td><td>g</td><td class="text-end">0.75</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fenilalanina + Tirosina</td><td>g</td><td class="text-end">1.03</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Treonina</td><td>g</td><td class="text-end">0.58</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Triptófano</td><td>g</td><td class="text-end">0.100</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Valina</td><td>g</td><td class="text-end">0.64</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Taurina</td><td>mg</td><td class="text-end">18</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Grasas y Ácidos Grasos</td></tr>
+                            <tr><td>Lípidos totales</td><td>g</td><td class="text-end">4.8</td><td class="text-end">17.6</td></tr>
+                            <tr><td>Ácido linoleico</td><td>g</td><td class="text-end">0.3</td><td class="text-end">2.93</td></tr>
+                            <tr><td>Ácido &alpha;-linolénico</td><td>g</td><td class="text-end">0.011</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Ácido araquidónico</td><td>g</td><td class="text-end">0.011</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>EPA + DHA Total</td><td>g</td><td class="text-end">0.0044</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Minerales</td></tr>
+                            <tr><td>Calcio</td><td>mg</td><td class="text-end">565</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Fósforo</td><td>mg</td><td class="text-end">411</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Magnesio</td><td>mg</td><td class="text-end">32</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Sodio</td><td>mg</td><td class="text-end">142</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Potasio</td><td>mg</td><td class="text-end">277</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cloruro</td><td>mg</td><td class="text-end">213</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Hierro</td><td>mg</td><td class="text-end">4.3</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Cobre</td><td>mg</td><td class="text-end">0.47</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Zinc</td><td>mg</td><td class="text-end">3.2</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Manganeso</td><td>mg</td><td class="text-end">0.38</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Selenio</td><td>&micro;g</td><td class="text-end">16</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Yodo</td><td>&micro;g</td><td class="text-end">96</td><td class="text-end">&mdash;</td></tr>
+
+                            <tr class="category-header"><td colspan="4">Vitaminas</td></tr>
+                            <tr><td>Vitamina A (retinol)</td><td>&micro;g</td><td class="text-end">107</td><td class="text-end">5,333</td></tr>
+                            <tr><td>Vitamina D3</td><td>&micro;g</td><td class="text-end">0.37</td><td class="text-end">40</td></tr>
+                            <tr><td>Vitamina E</td><td>mg</td><td class="text-end">1.67</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina K</td><td>&micro;g</td><td class="text-end">180</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Tiamina</td><td>mg</td><td class="text-end">0.32</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Riboflavina</td><td>mg</td><td class="text-end">0.21</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B6</td><td>mg</td><td class="text-end">0.11</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Niacina</td><td>mg</td><td class="text-end">2.10</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>&Aacute;cido pantoténico</td><td>mg</td><td class="text-end">0.31</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Vitamina B12</td><td>&micro;g</td><td class="text-end">1.0</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Folato</td><td>&micro;g</td><td class="text-end">33</td><td class="text-end">&mdash;</td></tr>
+                            <tr><td>Colina</td><td>mg</td><td class="text-end">113</td><td class="text-end">&mdash;</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <hr>
+        <p class="text-muted small">
+            NRC (2006). <em>Nutrient Requirements of Dogs and Cats.</em> National Research Council.
+            National Academies Press.
+        </p>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

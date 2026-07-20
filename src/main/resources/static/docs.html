@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referencia Técnica — Diet Formulator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .navbar-brand { font-weight: 600; }
+        .section-anchor { scroll-margin-top: 80px; }
+        table th { white-space: nowrap; }
+        .formula-box {
+            background-color: #e9ecef;
+            border-left: 4px solid #0d6efd;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+        .example-box {
+            background-color: #f0f7ff;
+            border: 1px solid #b6d4fe;
+            border-radius: 0.375rem;
+            padding: 1rem 1.25rem;
+            margin: 1rem 0;
+        }
+        .color-swatch {
+            display: inline-block;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.2rem;
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+        .color-black { background-color: #000; }
+        .color-green { background-color: #198754; }
+        .color-red { background-color: #dc3545; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/profiles">Diet Formulator</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/profiles">Perfiles</a>
+                <a class="nav-link" href="/foods">Alimentos</a>
+                <a class="nav-link" href="/diets">Dietas</a>
+                <a class="nav-link" href="/docs.html">Documentación</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <h1>Referencia Técnica</h1>
+        <p class="lead">
+            Requerimientos nutricionales de perros y gatos según
+            <strong>NRC (2006) <em>Nutrient Requirements of Dogs and Cats</em></strong>,
+            National Research Council.
+        </p>
+        <p class="text-muted">
+            Este documento resume los cálculos y valores que utiliza el formulator.
+            Para valores tabulares completos, ver
+            <a href="/docs-tablas.html">Tablas de Referencia</a>.
+        </p>
+
+        <hr>
+
+        <!-- ================================================================ -->
+        <!-- TABLA DE CONTENIDOS -->
+        <!-- ================================================================ -->
+
+        <nav id="toc" class="mb-5">
+            <h5>Contenido</h5>
+            <ol>
+                <li><a href="#sec-energia">Ingesta Calórica Recomendada (MER)</a>
+                    <ol>
+                        <li><a href="#sec-peso-efectivo">Peso efectivo</a></li>
+                        <li><a href="#sec-peso-metabolico">Peso metabólico</a></li>
+                        <li><a href="#sec-mer-base">MER base (mantenimiento)</a></li>
+                        <li><a href="#sec-ajustes">Ajustes por etapa de vida</a></li>
+                        <li><a href="#sec-actividad">Factor de actividad</a></li>
+                        <li><a href="#sec-ejemplos-energia">Ejemplos completos</a></li>
+                    </ol>
+                </li>
+                <li><a href="#sec-nutrientes">Requerimientos Nutricionales Diarios</a>
+                    <ol>
+                        <li><a href="#sec-formula-target">Fórmula general</a></li>
+                        <li><a href="#sec-selector-tabla">Selector de tabla NRC</a></li>
+                        <li><a href="#sec-unidades">Unidades de medida</a></li>
+                        <li><a href="#sec-sin-target">Nutrientes sin requerimiento</a></li>
+                    </ol>
+                </li>
+                <li><a href="#sec-colores">Códigos de Color</a></li>
+                <li><a href="#sec-sul">Límites Seguros Superiores (SUL)</a></li>
+                <li><a href="#sec-glosario">Glosario</a></li>
+            </ol>
+        </nav>
+
+        <!-- ================================================================ -->
+        <!-- PARTE 1: INGESTA CALÓRICA -->
+        <!-- ================================================================ -->
+
+        <h2 id="sec-energia" class="section-anchor">1. Ingesta Calórica Recomendada</h2>
+
+        <p>
+            Determina cuántas kilocalorías por día necesita el animal. El cálculo se basa en el
+            <strong>Requerimiento Energético de Mantenimiento (MER)</strong>, ajustado por etapa
+            de vida y nivel de actividad.
+        </p>
+
+        <div class="alert alert-info">
+            <strong>Idea clave:</strong> las ecuaciones calculan energía para el <em>peso que el
+            animal debería tener</em>, no para el peso que tiene actualmente. Si un animal tiene
+            sobrepeso, se usa su peso ideal para el cálculo.
+        </div>
+
+        <p><strong>Flujo del cálculo:</strong></p>
+        <div class="formula-box">
+            Peso efectivo &rarr; Peso metabólico &rarr; MER base &rarr; Ajuste etapa &rarr; Factor de actividad
+        </div>
+
+        <!-- 1.1 Peso efectivo -->
+        <h3 id="sec-peso-efectivo" class="section-anchor">1.1 Peso Efectivo</h3>
+
+        <table class="table table-bordered table-sm w-auto">
+            <thead class="table-dark">
+                <tr>
+                    <th>Condición</th>
+                    <th>Peso utilizado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>En peso ideal, o sin peso ideal definido</td>
+                    <td>Peso actual</td>
+                </tr>
+                <tr>
+                    <td>No en peso ideal + peso ideal definido</td>
+                    <td>Peso ideal</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 1.2 Peso metabólico -->
+        <h3 id="sec-peso-metabolico" class="section-anchor">1.2 Peso Metabólico</h3>
+
+        <div class="formula-box">
+            peso metabólico = peso efectivo<sup>exponente</sup>
+        </div>
+
+        <table class="table table-bordered table-sm w-auto">
+            <thead class="table-dark">
+                <tr>
+                    <th>Especie</th>
+                    <th>Exponente</th>
+                    <th>Referencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Perro</td>
+                    <td>0.75</td>
+                    <td>NRC (2006) Tabla 3-4</td>
+                </tr>
+                <tr>
+                    <td>Gato</td>
+                    <td>0.67</td>
+                    <td>NRC (2006) Tabla 3-6</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Ejemplo:</strong> perro de 21 kg &rarr; 21<sup>0.75</sup> = 9.81</p>
+
+        <!-- 1.3 MER base -->
+        <h3 id="sec-mer-base" class="section-anchor">1.3 MER Base (Mantenimiento)</h3>
+
+        <div class="formula-box">
+            MER base = coeficiente &times; peso metabólico
+        </div>
+
+        <table class="table table-bordered table-sm w-auto">
+            <thead class="table-dark">
+                <tr>
+                    <th>Especie</th>
+                    <th>Coeficiente</th>
+                    <th>Referencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Perro</td>
+                    <td>130.0</td>
+                    <td>NRC (2006) Tabla 15-4</td>
+                </tr>
+                <tr>
+                    <td>Gato</td>
+                    <td>100.0</td>
+                    <td>NRC (2006) Tabla 15-11</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p><strong>Ejemplo:</strong> perro de 21 kg &rarr; 130 &times; 9.81 = 1,275.3 kcal/día</p>
+
+        <!-- 1.4 Ajustes por etapa -->
+        <h3 id="sec-ajustes" class="section-anchor">1.4 Ajustes por Etapa de Vida</h3>
+
+        <h5>Adulto</h5>
+        <p>Sin ajuste. El MER base se usa tal cual.</p>
+
+        <h5>Cachorro (después del destete)</h5>
+        <p>
+            Se multiplica el MER base por un factor según la edad. Estos factores incluyen
+            la energía necesaria para el crecimiento.
+        </p>
+
+        <table class="table table-bordered table-sm w-auto">
+            <thead class="table-dark">
+                <tr>
+                    <th>Edad</th>
+                    <th>Factor</th>
+                    <th>Referencia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>&le; 4 meses</td>
+                    <td>&times; 2.5</td>
+                    <td rowspan="3">NRC (2006) Tabla 15-2</td>
+                </tr>
+                <tr>
+                    <td>5 &ndash; 8 meses</td>
+                    <td>&times; 2.0</td>
+                </tr>
+                <tr>
+                    <td>&gt; 8 meses</td>
+                    <td>&times; 1.6</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h5>Embarazada</h5>
+        <p>Se suma la energía fetal al MER base:</p>
+
+        <div class="formula-box">
+            MER = MER base + (26 &times; peso en kg)
+        </div>
+
+        <p>Referencia: NRC (2006) Tabla 15-6.</p>
+        <p><strong>Ejemplo:</strong> perra de 15 kg &rarr; 990.6 + (26 &times; 15) = 1,380.6 kcal/día</p>
+
+        <h5>Lactancia</h5>
+        <p>La lactancia tiene la mayor demanda energética. Se calculan tres componentes:</p>
+
+        <p><strong>Producción de leche por cachorro:</strong></p>
+        <table class="table table-bordered table-sm w-auto">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tamaño de camada</th>
+                    <th>Leche por cachorro (% del peso materno/día)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1 &ndash; 4 cachorros</td><td>1.0%</td></tr>
+                <tr><td>5 &ndash; 8 cachorros</td><td>0.5%</td></tr>
+                <tr><td>&gt; 8 cachorros</td><td>0.3%</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>Factor de semana:</strong></p>
+        <table class="table table-bordered table-sm w-auto">
+            <thead class="table-dark">
+                <tr>
+                    <th>Semana de lactancia</th>
+                    <th>Factor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Semana 1</td><td>0.75</td></tr>
+                <tr><td>Semana 2</td><td>0.95</td></tr>
+                <tr><td>Semana 3</td><td>1.10</td></tr>
+                <tr><td>Semana 4 o más</td><td>1.20</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>Fórmula completa:</strong></p>
+        <div class="formula-box">
+            Leche diaria (g) = peso (kg) &times; 1000 &times; % leche &times; número de cachorros<br>
+            Energía lactancia = leche diaria &times; 1.45 kcal/g &times; factor de semana<br>
+            MER = MER base + energía lactancia
+        </div>
+
+        <p>
+            1.45 kcal/g es la energía metabolizable de la leche canina/felina.
+            Referencia: NRC (2006) Tablas 15-7 (perros), 15-13 (gatos).
+        </p>
+
+        <p><strong>Ejemplo:</strong> perra de 21 kg, 4 cachorros, semana 3:</p>
+        <ul>
+            <li>Leche: 21,000 &times; 0.01 &times; 4 = 840 g</li>
+            <li>Energía: 840 &times; 1.45 &times; 1.10 = 1,337.7 kcal</li>
+            <li>MER = 1,275.3 + 1,337.7 = 2,613.0 kcal/día</li>
+        </ul>
+
+        <!-- 1.5 Factor de actividad -->
+        <h3 id="sec-actividad" class="section-anchor">1.5 Factor de Actividad</h3>
+
+        <div class="formula-box">
+            Ingesta recomendada = MER &times; factor de actividad
+        </div>
+
+        <table class="table table-bordered table-sm w-auto">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nivel de actividad</th>
+                    <th>Factor</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Gran Danés / Galgo activo</td><td>1.6</td></tr>
+                <tr><td>Terrier</td><td>1.4</td></tr>
+                <tr><td>Muy activo</td><td>1.3</td></tr>
+                <tr><td>Activo</td><td>1.2</td></tr>
+                <tr><td>Adulto joven</td><td>1.0</td></tr>
+                <tr><td>Inactivo / senior</td><td>0.8</td></tr>
+                <tr><td>Canil, muy inactivo</td><td>0.7</td></tr>
+                <tr><td>Sedentario</td><td>0.6</td></tr>
+            </tbody>
+        </table>
+
+        <p><strong>Nota:</strong> todos los valores finales se redondean a 2 decimales.</p>
+
+        <!-- 1.6 Ejemplos -->
+        <h3 id="sec-ejemplos-energia" class="section-anchor">1.6 Ejemplos Completos</h3>
+
+        <div class="example-box">
+            <h6>Perro adulto, 21 kg, sedentario</h6>
+            <ol>
+                <li>Peso efectivo: 21 kg</li>
+                <li>Peso metabólico: 21<sup>0.75</sup> = 9.81</li>
+                <li>MER base: 130 &times; 9.81 = 1,275.3 kcal/día</li>
+                <li>Adulto: sin ajuste</li>
+                <li>Ingesta: 1,275.3 &times; 0.6 = <strong>765.2 kcal/día</strong></li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <h6>Gato adulto, 4 kg, activo</h6>
+            <ol>
+                <li>Peso efectivo: 4 kg</li>
+                <li>Peso metabólico: 4<sup>0.67</sup> = 2.52</li>
+                <li>MER base: 100 &times; 2.52 = 251.5 kcal/día</li>
+                <li>Adulto: sin ajuste</li>
+                <li>Ingesta: 251.5 &times; 1.2 = <strong>301.8 kcal/día</strong></li>
+            </ol>
+        </div>
+
+        <div class="example-box">
+            <h6>Perra embarazada, 15 kg, adulto joven</h6>
+            <ol>
+                <li>Peso efectivo: 15 kg</li>
+                <li>Peso metabólico: 15<sup>0.75</sup> = 7.62</li>
+                <li>MER base: 130 &times; 7.62 = 990.6 kcal/día</li>
+                <li>Embarazo: 990.6 + (26 &times; 15) = 1,380.6 kcal/día</li>
+                <li>Ingesta: 1,380.6 &times; 1.0 = <strong>1,380.6 kcal/día</strong></li>
+            </ol>
+        </div>
+
+        <hr>
+
+        <!-- ================================================================ -->
+        <!-- PARTE 2: REQUERIMIENTOS NUTRICIONALES -->
+        <!-- ================================================================ -->
+
+        <h2 id="sec-nutrientes" class="section-anchor">2. Requerimientos Nutricionales Diarios</h2>
+
+        <p>
+            Para cada nutriente esencial, el NRC define un <strong>Requerimiento Recomendado (RA)</strong>
+            expresado por kg de peso metabólico (peso<sup>exponente</sup>). Este valor se multiplica
+            por el peso metabólico del animal para obtener el objetivo diario.
+        </p>
+
+        <!-- 2.1 Fórmula -->
+        <h3 id="sec-formula-target" class="section-anchor">2.1 Fórmula General</h3>
+
+        <div class="formula-box">
+            Target diario = RA por kg BW<sup>exp</sup> &times; peso metabólico
+        </div>
+
+        <p>
+            Donde:<br>
+            &bull; <strong>RA por kg BW<sup>exp</sup></strong> = valor de Recomendación de la tabla NRC<br>
+            &bull; <strong>Peso metabólico</strong> = peso efectivo<sup>0.75</sup> (perros) o <sup>0.67</sup> (gatos)
+        </p>
+
+        <!-- 2.2 Selector de tabla -->
+        <h3 id="sec-selector-tabla" class="section-anchor">2.2 Tablas NRC Utilizadas</h3>
+
+        <table class="table table-bordered table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Especie</th>
+                    <th>Etapa de vida</th>
+                    <th>Tabla NRC</th>
+                    <th>Notas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Perro</td>
+                    <td>Cachorro (14+ semanas)</td>
+                    <td>15-3</td>
+                    <td>Proteínas/aminoácidos de 14+ sem; grasas/minerales/vitaminas post-destete</td>
+                </tr>
+                <tr>
+                    <td>Perro</td>
+                    <td>Adulto</td>
+                    <td>15-5</td>
+                    <td>Mantenimiento</td>
+                </tr>
+                <tr>
+                    <td>Perro</td>
+                    <td>Gestación / Lactancia</td>
+                    <td>15-8</td>
+                    <td>Valores unificados para ambas etapas</td>
+                </tr>
+                <tr>
+                    <td>Gato</td>
+                    <td>Cachorro (kitten)</td>
+                    <td>15-10</td>
+                    <td>Crecimiento</td>
+                </tr>
+                <tr>
+                    <td>Gato</td>
+                    <td>Adulto</td>
+                    <td>15-12</td>
+                    <td>Mantenimiento</td>
+                </tr>
+                <tr>
+                    <td>Gato</td>
+                    <td>Gestación</td>
+                    <td>15-14</td>
+                    <td>Sección "Gestating" (proteínas/aminoácidos) + grasas/minerales/vitaminas compartidos</td>
+                </tr>
+                <tr>
+                    <td>Gato</td>
+                    <td>Lactancia</td>
+                    <td>15-14</td>
+                    <td>Sección "Lactating" (proteínas/aminoácidos) + grasas/minerales/vitaminas compartidos</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 2.3 Unidades -->
+        <h3 id="sec-unidades" class="section-anchor">2.3 Unidades de Medida</h3>
+
+        <p>
+            Las tablas NRC reportan valores en diferentes unidades según el nutriente.
+            El sistema almacena todo en la unidad original del nutriente:
+        </p>
+
+        <table class="table table-bordered table-sm w-auto">
+            <thead class="table-dark">
+                <tr>
+                    <th>Unidad</th>
+                    <th>Nutrientes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>g (gramos)</td>
+                    <td>Proteína, aminoácidos, ácidos grasos, lípidos, calcio, fósforo, potasio</td>
+                </tr>
+                <tr>
+                    <td>mg (miligramos)</td>
+                    <td>Minerales (hierro, zinc, cobre, etc.), vitaminas hidrosolubles, taurina (perros)</td>
+                </tr>
+                <tr>
+                    <td>&micro;g (microgramos)</td>
+                    <td>Selenio, yodo, vitaminas liposolubles (A, D, E, K), B12, folato</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="alert alert-warning">
+            <strong>Conversión Vitamina K:</strong> el NRC reporta valores en mg (menadione).
+            El sistema almacena en &micro;g (factor &times;1000).
+        </div>
+
+        <!-- 2.4 Sin target -->
+        <h3 id="sec-sin-target" class="section-anchor">2.4 Nutrientes sin Requerimiento Definido</h3>
+
+        <p>
+            Algunos nutrientes no tienen un target numérico en las tablas NRC.
+            Esto no significa que no sean importantes, sino que el NRC no estableció
+            un valor mínimo para ellos:
+        </p>
+
+        <table class="table table-bordered table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nutriente</th>
+                    <th>Razón</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Carbohidratos, Fibra</td>
+                    <td>El NRC no define un requerimiento mínimo para estos nutrientes en perros y gatos</td>
+                </tr>
+                <tr>
+                    <td>Vitamina C, Betaina</td>
+                    <td>Sintetizados por el organismo; no es necesario aportarlos por dieta</td>
+                </tr>
+                <tr>
+                    <td>EPA individual, DHA individual</td>
+                    <td>El NRC solo define el requerimiento de EPA+DHA combinados</td>
+                </tr>
+                <tr>
+                    <td>Omega 6 / Omega 3 genéricos</td>
+                    <td>El NRC define ácidos grasos específicos (linoleico, alfa-linolénico, etc.)</td>
+                </tr>
+                <tr>
+                    <td>20:2 n-6, 20:3 n-6</td>
+                    <td>Metabolitos intermedios del metabolismo de ácidos grasos</td>
+                </tr>
+                <tr>
+                    <td>Ca:P, Zn:Cu, Omega 6:3 (ratios)</td>
+                    <td>Valores calculados a partir de componentes individuales, no de tablas NRC</td>
+                </tr>
+                <tr>
+                    <td>Tamaño porción, Agua, Materia seca, Ceniza</td>
+                    <td>Valores calculados, no provenientes de tablas de requerimiento</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <!-- ================================================================ -->
+        <!-- PARTE 3: CÓDIGOS DE COLOR -->
+        <!-- ================================================================ -->
+
+        <h2 id="sec-colores" class="section-anchor">3. Códigos de Color</h2>
+
+        <p>
+            Cada nutriente se evalúa comparando el total aportado por la dieta contra
+            el target diario y el límite seguro superior (SUL):
+        </p>
+
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Estado</th>
+                    <th>Condición</th>
+                    <th>Significado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="color-swatch color-black"></span> <strong>Insuficiente</strong></td>
+                    <td>Total &lt; target</td>
+                    <td>Por debajo del mínimo recomendado. Revisar la dieta.</td>
+                </tr>
+                <tr>
+                    <td><span class="color-swatch color-green"></span> <strong>Adecuado</strong></td>
+                    <td>Target &le; Total &le; SUL, <em>o</em> Total &ge; target sin SUL definido</td>
+                    <td>Dentro del rango seguro, o sin límite superior definido.</td>
+                </tr>
+                <tr>
+                    <td><span class="color-swatch color-red"></span> <strong>Exceso</strong></td>
+                    <td>Total &gt; SUL</td>
+                    <td>Excede el límite seguro. Riesgo de toxicidad.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>
+            Si un nutriente no tiene target (no aparece en las tablas NRC para esa especie/etapa),
+            no se evalúa y no muestra color.
+        </p>
+
+        <div class="alert alert-info">
+            <strong>¿Por qué algunos nutrientes nunca se muestran en rojo?</strong>
+            Porque el NRC no definió un límite seguro superior (SUL) para ellos. Esto no es un error
+            del sistema — es una decisión del NRC basada en la falta de evidencia de toxicidad
+            para esos nutrientes a nivel dietario.
+        </div>
+
+        <hr>
+
+        <!-- ================================================================ -->
+        <!-- PARTE 4: LÍMITES SEGUROS -->
+        <!-- ================================================================ -->
+
+        <h2 id="sec-sul" class="section-anchor">4. Límites Seguros Superiores (SUL)</h2>
+
+        <p>
+            El NRC define SUL para algunos nutrientes en cada tabla. Si el total aportado
+            por la dieta supera el SUL, el nutriente se marca como <strong>Exceso</strong>.
+        </p>
+
+        <h5>Nutrientes con SUL definidos por tabla</h5>
+
+        <table class="table table-bordered table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tabla</th>
+                    <th>Nutrientes con SUL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Perro cachorro (15-3)</td>
+                    <td>Lisina, Lípidos totales, Linoleico, EPA+DHA, Calcio, Vitamina A, Vitamina D3</td>
+                </tr>
+                <tr>
+                    <td>Perro adulto (15-5)</td>
+                    <td>Lípidos totales, Linoleico, EPA+DHA, Vitamina A, Vitamina D3</td>
+                </tr>
+                <tr>
+                    <td>Perro gestación/lactancia (15-8)</td>
+                    <td>Lípidos totales, Linoleico, EPA+DHA, Vitamina A, Vitamina D3</td>
+                </tr>
+                <tr>
+                    <td>Gato cachorro (15-10)</td>
+                    <td>Arginina, Histidina, Isoleucina, Leucina, Lisina, Metionina, Phe, Phe+Tyr, Treonina, Triptófano, Valina, Taurina, Lípidos, Linoleico, Vitamina A, Vitamina D3</td>
+                </tr>
+                <tr>
+                    <td>Gato adulto (15-12)</td>
+                    <td>Lípidos totales, Linoleico, Araquidónico, Zinc, Vitamina A, Vitamina D3</td>
+                </tr>
+                <tr>
+                    <td>Gato gestación/lactancia (15-14)</td>
+                    <td>Lípidos totales, Linoleico, Vitamina A, Vitamina D3</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h5>Nutrientes sin SUL</h5>
+
+        <p>El NRC intencionalmente no define SUL para estos nutrientes:</p>
+
+        <table class="table table-bordered table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nutriente</th>
+                    <th>Razón</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Proteína</td>
+                    <td>Perros y gatos toleran altos niveles de proteína dietaria</td>
+                </tr>
+                <tr>
+                    <td>La mayoría de los aminoácidos</td>
+                    <td>No se establecieron límites por falta de evidencia de toxicidad</td>
+                </tr>
+                <tr>
+                    <td>Calcio (perro adulto/gestación)</td>
+                    <td>No se definió SUL para estas etapas</td>
+                </tr>
+                <tr>
+                    <td>Fósforo, Magnesio, Sodio, Potasio, Cloruro</td>
+                    <td>Minerales sin evidencia de toxicidad a nivel dietario</td>
+                </tr>
+                <tr>
+                    <td>Hierro, Cobre, Manganeso, Selenio, Yodo</td>
+                    <td>Minerales esenciales sin SUL definido en la mayoría de tablas</td>
+                </tr>
+                <tr>
+                    <td>Vitamina E, K, Tiamina, Riboflavina, B6, Niacina, Pantoténico, B12, Folato, Colina</td>
+                    <td>Vitaminas hidrosolubles sin SUL definido</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h5>Ejemplos de SUL (perro adulto)</h5>
+
+        <table class="table table-bordered table-sm w-auto">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nutriente</th>
+                    <th>SUL (por kg BW<sup>0.75</sup>)</th>
+                    <th>RA (por kg BW<sup>0.75</sup>)</th>
+                    <th>Ratio SUL/RA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Lípidos totales</td><td>10.8 g</td><td>1.8 g</td><td>6.0&times;</td></tr>
+                <tr><td>Linoleico</td><td>2.1 g</td><td>0.36 g</td><td>5.8&times;</td></tr>
+                <tr><td>EPA+DHA</td><td>0.37 g</td><td>0.03 g</td><td>12.3&times;</td></tr>
+                <tr><td>Vitamina A</td><td>2,099 &micro;g</td><td>50 &micro;g</td><td>42.0&times;</td></tr>
+                <tr><td>Vitamina D3</td><td>2.6 &micro;g</td><td>0.45 &micro;g</td><td>5.8&times;</td></tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <!-- ================================================================ -->
+        <!-- GLOSARIO -->
+        <!-- ================================================================ -->
+
+        <h2 id="sec-glosario" class="section-anchor">5. Glosario</h2>
+
+        <table class="table table-bordered table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Abreviatura</th>
+                    <th>Inglés</th>
+                    <th>Español</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>BW</td><td>Body Weight</td><td>Peso corporal</td></tr>
+                <tr><td>ME</td><td>Metabolizable Energy</td><td>Energía metabolizable</td></tr>
+                <tr><td>MER</td><td>Maintenance Energy Requirement</td><td>Requerimiento energético de mantenimiento</td></tr>
+                <tr><td>RA</td><td>Recommended Allowance</td><td>Recomendación (valor más conservador)</td></tr>
+                <tr><td>MR</td><td>Minimal Requirement</td><td>Requerimiento mínimo</td></tr>
+                <tr><td>AI</td><td>Adequate Intake</td><td>Ingesta adecuada</td></tr>
+                <tr><td>SUL</td><td>Safe Upper Limit</td><td>Límite seguro superior</td></tr>
+                <tr><td>DM</td><td>Dry Matter</td><td>Materia seca</td></tr>
+                <tr><td>kcal</td><td>Kilocalorie</td><td>Kilocaloría</td></tr>
+                <tr><td>g</td><td>Gram</td><td>Gramo</td></tr>
+                <tr><td>mg</td><td>Milligram</td><td>Miligramo</td></tr>
+                <tr><td>&micro;g</td><td>Microgram</td><td>Microgramo</td></tr>
+                <tr><td>RE</td><td>Retinol Equivalent</td><td>Equivalente de retinol</td></tr>
+            </tbody>
+        </table>
+
+        <hr>
+        <p class="text-muted small">
+            NRC (2006). <em>Nutrient Requirements of Dogs and Cats.</em> National Research Council.
+            National Academies Press.
+        </p>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

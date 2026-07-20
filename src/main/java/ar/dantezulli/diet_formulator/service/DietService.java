@@ -4,14 +4,15 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ar.dantezulli.diet_formulator.model.AnimalProfile;
-import ar.dantezulli.diet_formulator.model.Diet;
-import ar.dantezulli.diet_formulator.model.DietItem;
-import ar.dantezulli.diet_formulator.model.Food;
+import ar.dantezulli.diet_formulator.model.entities.AnimalProfile;
+import ar.dantezulli.diet_formulator.model.entities.Diet;
+import ar.dantezulli.diet_formulator.model.entities.DietItem;
+import ar.dantezulli.diet_formulator.model.entities.Food;
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
 import ar.dantezulli.diet_formulator.model.enums.NutrientLevel;
 import ar.dantezulli.diet_formulator.model.enums.QuantityUnit;
@@ -32,12 +33,12 @@ public class DietService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Diet> findById(Long id) {
+    public Optional<Diet> findById(UUID id) {
         return repository.findById(id);
     }
 
     @Transactional(readOnly = true)
-    public List<Diet> findByProfileId(Long profileId) {
+    public List<Diet> findByProfileId(UUID profileId) {
         return repository.findByAnimalProfileId(profileId);
     }
 
@@ -45,11 +46,11 @@ public class DietService {
         return repository.save(diet);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(UUID id) {
         repository.deleteById(id);
     }
 
-    public Diet addItem(Long dietId, Long foodId, Double quantity, QuantityUnit unit, String cookingMethod) {
+    public Diet addItem(UUID dietId, UUID foodId, Double quantity, QuantityUnit unit, String cookingMethod) {
         Diet diet = repository.findById(dietId)
             .orElseThrow(() -> new IllegalArgumentException("Dieta no encontrada: " + dietId));
 
@@ -63,7 +64,7 @@ public class DietService {
         return repository.save(diet);
     }
 
-    public Diet removeItem(Long dietId, Long itemId) {
+    public Diet removeItem(UUID dietId, UUID itemId) {
         Diet diet = repository.findById(dietId)
             .orElseThrow(() -> new IllegalArgumentException("Dieta no encontrada: " + dietId));
 

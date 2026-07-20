@@ -7,13 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ar.dantezulli.diet_formulator.model.Food;
+import ar.dantezulli.diet_formulator.model.entities.Food;
 import ar.dantezulli.diet_formulator.model.enums.Nutrient;
 import ar.dantezulli.diet_formulator.model.enums.FoodType;
 import ar.dantezulli.diet_formulator.model.enums.PortionUnit;
@@ -23,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
+@Profile("!test")
 @RequiredArgsConstructor
 public class USDAFoodDataLoader implements CommandLineRunner {
 

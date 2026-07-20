@@ -1,21 +1,16 @@
 spring:
   application:
-    name: diet-formulator
+    name: diet-formulator-test
 
   datasource:
-    url: jdbc:sqlite:./data/diet-formulator.db
+    url: "jdbc:sqlite::memory:"
     driver-class-name: org.sqlite.JDBC
 
   jpa:
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
         dialect: org.hibernate.community.dialect.SQLiteDialect
-
-  thymeleaf:
-    cache: false
-    prefix: classpath:/templates/
-    suffix: .html
