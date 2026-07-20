@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${diet?.name + ' - Diet Formulator'}">Dieta</title>
+    <title th:text="${diet?.name + ' - Formulador de Dietas'}">Dieta</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <style>
-        body { background-color: #f8f9fa; }
-        .navbar-brand { font-weight: 600; }
         table.table td.nutrient-adequate { color: #198754 !important; font-weight: bold; }
         table.table td.nutrient-excess { color: #dc3545 !important; font-weight: bold; }
         table.table td.nutrient-below { color: #000 !important; font-weight: bold; }
-        .section-header { background-color: #e9ecef; font-weight: 600; }
-        .category-header td { background-color: #dee2e6; font-weight: 700; font-size: 0.9rem; }
         .nutrient-unit { color: #6c757d; font-size: 0.85em; }
     </style>
+    <link rel="icon" type="image/svg+xml" th:href="@{/dog-pawprint-on-a-heart-svgrepo-com.svg}">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
         <div class="container">
-            <a class="navbar-brand" th:href="@{/profiles}">Diet Formulator</a>
+            <a class="navbar-brand" th:href="@{/profiles}"><img src="/dog-pawprint-on-a-heart-svgrepo-com.svg" alt="" width="28" height="28" class="me-2">Formulador de Dietas</a>
             <div class="navbar-nav">
                 <a class="nav-link" th:href="@{/profiles}">Perfiles</a>
                 <a class="nav-link" th:href="@{/foods}">Alimentos</a>
