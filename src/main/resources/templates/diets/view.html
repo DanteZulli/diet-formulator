@@ -53,8 +53,9 @@
                 <form th:action="@{/diets/{id}/items(id=${diet.id})}" method="post">
                     <div class="row">
                         <div class="col-md-4">
-                            <label for="foodId" class="form-label">Alimento</label>
-                            <select class="form-select" id="foodId" name="foodId" required>
+                            <label for="foodSearch" class="form-label">Buscar alimento</label>
+                            <input type="text" class="form-control" id="foodSearch" placeholder="Escribí para filtrar..." autocomplete="off">
+                            <select class="form-select mt-1" id="foodId" name="foodId" required size="1">
                                 <option value="">Seleccionar...</option>
                                 <option th:each="food : ${allFoods}" th:value="${food.id}" th:text="${food.name}"></option>
                             </select>
@@ -188,5 +189,25 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script>
+        (function () {
+            const search = document.getElementById('foodSearch');
+            const select = document.getElementById('foodId');
+            const options = Array.from(select.options);
+
+            search.addEventListener('input', function () {
+                const term = this.value.toLowerCase().trim();
+                select.innerHTML = '';
+                options.forEach(function (opt) {
+                    if (!term || opt.text.toLowerCase().includes(term)) {
+                        select.appendChild(opt.cloneNode(true));
+                    }
+                });
+                if (select.options.length > 0) {
+                    select.selectedIndex = 0;
+                }
+            });
+        })();
+    </script>
 </body>
 </html>
