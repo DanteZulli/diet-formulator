@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:sqlite:/app/data/diet-formulator.db
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  thymeleaf:
+    cache: true

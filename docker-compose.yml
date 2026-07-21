@@ -1,0 +1,12 @@
+services:
+  diet-formulator:
+    build: .
+    ports:
+      - "8080:8080"
+    volumes:
+      - diet-formulator-data:/app/data
+      - ./data/FoodData_Central_foundation_food_json_2026-04-30.json:/app/data/FoodData_Central_foundation_food_json_2026-04-30.json:ro
+    restart: unless-stopped
+
+volumes:
+  diet-formulator-data:

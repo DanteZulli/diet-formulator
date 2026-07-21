@@ -1,0 +1,16 @@
+.git
+.gradle
+build/
+bin/
+data/*.db
+data/*.db-journal
+data/*.db-wal
+data/*.db-shm
+*.md
+!README.md
+.vscode/
+.idea/
+.classpath
+.project
+.settings/
+.factorypath
